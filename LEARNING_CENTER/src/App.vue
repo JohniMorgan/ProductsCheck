@@ -14,7 +14,7 @@ store.init();
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Hello World!"/>
+  <RouterView/>
 </template>
 
 <style scoped>
