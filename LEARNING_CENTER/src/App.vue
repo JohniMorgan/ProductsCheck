@@ -1,5 +1,8 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
+import { useStore } from './store';
+const store = useStore();
+store.init();
 </script>
 
 <template>
@@ -11,7 +14,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <HelloWorld msg="Hello World!"/>
 </template>
 
 <style scoped>

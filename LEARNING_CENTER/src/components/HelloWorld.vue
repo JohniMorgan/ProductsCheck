@@ -1,18 +1,32 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, reactive } from 'vue';
+import { useStore } from "../store.js";
 
 defineProps({
   msg: String,
 })
-
-const count = ref(0)
+const store = useStore();
+// Объвяление реактивных переменных
+/* const count = ref(0) */
+//Обявление computed-свойств
+/* const countIncByOne = computed(() => count.value + 1); */
+//Второй способ объявления реактивного объекта
+const books = reactive({
+  firstBook: "Пушкин",
+  secondBook: "Достоевский",
+  thirdBook: "Толстой"
+})
+//Объявление метода (функции) в setup
+function increment() {
+  store.increment();
+}
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <v-btn color="#F00" @click="increment">count is {{ store.count }}</v-btn>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
@@ -33,7 +47,7 @@ const count = ref(0)
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<style scoped>
+<style scoped> 
 .read-the-docs {
   color: #888;
 }
