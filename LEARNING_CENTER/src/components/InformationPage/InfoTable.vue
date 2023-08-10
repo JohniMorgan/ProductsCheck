@@ -1,10 +1,22 @@
 <script setup>
 import { useStore } from '../../store';
+import { defineProps, computed } from 'vue';
 const store = useStore();
+const props = defineProps ({
+    keyWord: String
+});
+const actualProducts = computed(() => {
+    return store.products.filter((product) => {
+        return product.name.includes(props.keyWord);
+    })
+})
+const keyWordDoubled = computed(() => {
+    return props.keyWord + " " + props.keyWord
+})
 </script>
 
 <template>
-    <v-table theme="dark" fixed-header="true">
+    <v-table fixed-header height="400px">
         <thead>
         <tr>
             <th>Название</th>
@@ -15,8 +27,8 @@ const store = useStore();
         </tr>
         </thead>
         <tbody>
-        <tr v-for="product in store.products"
-        :key="product.name">
+        <tr v-for="(product, index) in actualProducts"
+        :key="index">
             <td>{{ product.name }}</td>
             <td>{{ product.calories }}</td>
             <td>{{ product.proteins }}</td>
@@ -28,5 +40,7 @@ const store = useStore();
 </template>
 
 <style scoped lang="scss">
-
+    v-table {
+        overflow: scroll;
+    }
 </style>
