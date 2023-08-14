@@ -8,7 +8,7 @@ function increment() {
 
 <template>
   <v-card>
-    <v-btn @click="increment" color="primary">count is {{ store.count }}</v-btn>
+      <v-btn @click="increment">count is {{ store.count }}</v-btn>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
@@ -31,4 +31,5 @@ function increment() {
 
 
 <style scoped lang="scss">
+  
 </style>

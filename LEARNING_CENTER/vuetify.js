@@ -7,10 +7,12 @@ const baseLightTheme = {
     dark: false,
     colors: {
         background: '#ffffff',
-        surface: '##f0f0f0',
-        primary: '#007bff',
-        'primary-darken-1' : '#17c671',
-        secondary: '#17c671',
+        surface: '#f5f5f5',
+        primary: '#2196F3',
+        'on-primary': '#ffffff',
+        'primary-hover': '#64b5f6',
+        text: '#333333',
+        graphic: '#4caf50',
     }
 }
 
@@ -18,9 +20,12 @@ const baseDarkTheme = {
     dark: true,
     colors: {
         background: '#121212',
-        surface: '#333333',
-        primary: '#ff9800',
-        secondary: '#ff7043',
+        surface: '#1f1f1f',
+        primary: '#у65100',
+        'on-primary': "#ffffff",
+        'primary-hover': 'ff6f00',
+        text: '#ffffff',
+        graphic: '4caf50',
     }
 }
 
@@ -36,5 +41,5 @@ export default createVuetify({
             baseLightTheme,
             baseDarkTheme
         }
-    }
+    },
 })

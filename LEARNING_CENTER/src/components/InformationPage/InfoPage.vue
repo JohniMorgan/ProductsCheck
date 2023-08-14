@@ -9,7 +9,6 @@ const search = ref('')
 <template>
     <SearchInput :search="search" @change="search = $event.value"/>
     <InfoTable :key-word="search"/>
-    <v-input>Ищем по {{ search }}</v-input>
 </template>
 
 <style scoped lang="scss">

@@ -3,6 +3,11 @@
   $color-pack: false,
 );
 
+$active-color: rgb(var(--v-theme-primary));
+$active-hover-color: rgb(var(--v-theme-primary-hover));
+$active-text-color: rgb(var(--v-theme-on-primary));
+$text-colot: rgb(var(--v-theme-text));
+
 %centered {
     display: flex;
     flex-direction: column;
@@ -20,6 +25,7 @@ body {
         size: 16px;
     }
     line-height: 1.5;
+    color: rgb(var(--v-theme-text));
 }
 
 h1, h2, h3 {
@@ -35,8 +41,21 @@ p {
 
 a {
     text-decoration: none;
+    color: $active-color;
+
+    &:hover {
+        color: $active-hover-color;
+    }
 }
 .v-card {
     width: 800px;
     @extend %centered;
+}
+.v-btn {
+    background-color: $active-color;
+    color: $active-text-color;
+
+    &:hover {
+        background-color: $active-hover-color;
+    }
 }

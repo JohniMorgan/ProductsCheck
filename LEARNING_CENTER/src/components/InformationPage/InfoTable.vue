@@ -10,9 +10,6 @@ const actualProducts = computed(() => {
         return product.name.includes(props.keyWord);
     })
 })
-const keyWordDoubled = computed(() => {
-    return props.keyWord + " " + props.keyWord
-})
 </script>
 
 <template>

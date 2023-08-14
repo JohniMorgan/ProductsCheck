@@ -10,10 +10,10 @@ const switchTheme = () => {
 </script>
 
 <template>
-  <v-btn @click="switchTheme" color="secondary"></v-btn>
+  <v-btn @click="switchTheme"></v-btn>
   <RouterView/>
 </template>
 
 <style lang="scss">
-  $dark-theme-acent: #ff9800;
+
 </style>

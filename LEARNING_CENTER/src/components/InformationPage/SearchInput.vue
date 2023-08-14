@@ -22,7 +22,5 @@ function onInput(event) {
 </template>
 
 <style scoped lang="scss">
-input {
-    color: white;
-}
+
 </style>
