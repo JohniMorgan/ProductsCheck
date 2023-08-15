@@ -28,7 +28,6 @@ function submit() {
 
 <template>
 <v-card>
-    <v-divider></v-divider>
     <v-input
     append-icon="mdi-backspace-outline"
     @click:append="close">
@@ -39,7 +38,7 @@ function submit() {
     v-model="count"
     prepend-icon="mdi-plus-minus">
     <template v-slot:append>
-        <v-input>грамм</v-input>
+        грамм
     </template>
     </v-text-field>
     <v-table>

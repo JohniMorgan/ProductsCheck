@@ -8,10 +8,14 @@ store.init();
 </script>
 
 <template>
-  
+<v-layout>
   <BaseHeader/>
-  
-  <RouterView/>
+<v-main>
+  <v-container fluid>
+    <RouterView/>
+  </v-container>
+</v-main>
+</v-layout>
 </template>
 
 <style lang="scss">

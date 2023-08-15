@@ -6,7 +6,8 @@ import SearchInput from '../InformationPage/SearchInput.vue';
 
 const store = useStore();
 const msg = ref("");
-const selected = ref([]);
+const selected = ref(null);
+const started = ref(false);
 
 const actualProducts = computed(() => store.products.filter(
     (product) => {
@@ -17,16 +18,25 @@ function addToChoosen(event) {
     selected.value = event.trigger;
     emit('next-step', {value: selected.value});
 };
-const emit = defineEmits(['next-step']);
+function onInput(event) {
+    msg.value = event.value;
+    started.value = true;
+};
+
+const emit = defineEmits(['next-step', 'back-step']);
 </script>
 
 <template> 
 <v-card>
     <SearchInput
         :search="msg"
-        @change="msg = $event.value"
+        @change="onInput"
+        :append-icon="'mdi-backspace-outline'"
+        @click:append="emit('back-step')"
     />
+    
     <v-virtual-scroll
+    v-if="started"
     :items="actualProducts"
     height="200">
     <template v-slot:default="{ item }">

@@ -1,4 +1,6 @@
 import {createVuetify} from 'vuetify';
+import DayJsAdapter from '@date-io/dayjs'
+import ruRu from 'date-fns/'
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import './src/styles/style.scss';
@@ -24,8 +26,8 @@ const baseDarkTheme = {
         surface: '#1f1f1f',
         primary: '#e65100',
         'on-primary': "#ffffff",
-        'primary-hover': 'ff6f00',
-        active: '#ff7043',
+        'primary-hover': '#ff7043',
+        active: 'ff6f00',
         text: '#ffffff',
         graphic: '4caf50',
     }
@@ -44,4 +46,10 @@ export default createVuetify({
             baseDarkTheme
         }
     },
+    date: {
+        adapter: DayJsAdapter,
+        locale: {
+            ru: ruRu
+        }
+    }
 })

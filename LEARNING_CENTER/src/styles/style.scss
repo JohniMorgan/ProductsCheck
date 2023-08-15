@@ -5,8 +5,10 @@
 
 $active-color: rgb(var(--v-theme-primary));
 $active-hover-color: rgb(var(--v-theme-primary-hover));
+$surface-color: rgb(var(--v-theme-surface));
 $active-text-color: rgb(var(--v-theme-on-primary));
-$text-colot: rgb(var(--v-theme-text));
+$text-color: rgb(var(--v-theme-text));
+$active-choose-color: rgb(var(--v-theme-active));
 
 %default-centered {
     height: auto;
@@ -58,10 +60,23 @@ a {
     &:hover {
         background-color: $active-hover-color;
     }
+    &.v-btn--active {
+        background-color: $active-choose-color !important;
+    }
 }
 .v-switch__track {
     background-color: $active-hover-color;
 }
 .v-switch__thumb {
         background-color: $active-color;
+}
+
+
+@each $container in ('month__day', 'controls__month', 'controls', 'header') {
+    .v-date-picker-#{$container} {
+        .v-btn {
+            background-color: $surface-color;
+            color: $text-color
+        }
+    }
 }

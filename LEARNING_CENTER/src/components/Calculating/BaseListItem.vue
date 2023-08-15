@@ -6,9 +6,9 @@ const props = defineProps({
 });
 const emit = defineEmits(['choose']);
 function onChoose() {
-   emit('choose', {
-    trigger: props.product,
-   })
+    emit('choose', {
+        trigger: props.product,
+    })
 };
 
 </script>

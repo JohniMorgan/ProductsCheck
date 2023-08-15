@@ -9,11 +9,9 @@ const switchTheme = () => {
 </script>
 
 <template>
-<header>
-<v-layout>
-    <v-app-bar app>
+    <v-app-bar>
     <template v-slot:title>
-        <v-toolbar-title>ЗОЖ - учёт продуктов {{ position }}</v-toolbar-title>
+        <v-toolbar-title>ЗОЖ - учёт продуктов</v-toolbar-title>
     </template>
     <template v-slot:prepend>
 
@@ -30,7 +28,7 @@ const switchTheme = () => {
             <v-icon>mdi-chart-line</v-icon>
             Отчёт
         </v-btn>
-        <v-btn value="data-base" stacked>
+        <v-btn value="info" stacked>
             <v-icon>mdi-food-fork-drink</v-icon>
             Продукты
         </v-btn>
@@ -40,8 +38,6 @@ const switchTheme = () => {
             <span class="switch-label">Тема</span>
         </v-col>
     </v-app-bar>
-</v-layout>
-</header>
 </template>
 
 <style scoped lang='scss'>
@@ -53,5 +49,7 @@ const switchTheme = () => {
         text-align:start;
         font-size: 14px;
         margin-top: -12px;
+    }
+    .active {
     }
 </style>
