@@ -1,5 +1,5 @@
 <script setup>
-import { useStore } from '../../store';
+import { useStore } from '../../store/store';
 import { defineProps, computed } from 'vue';
 const store = useStore();
 const props = defineProps ({
@@ -16,11 +16,7 @@ const actualProducts = computed(() => {
     <v-table fixed-header height="400px">
         <thead>
         <tr>
-            <th>Название</th>
-            <th>Калории</th>
-            <th>Белки</th>
-            <th>Жиры</th>
-            <th>Углеводы</th>
+            <th v-for="title in store.headers">{{title}}</th>
         </tr>
         </thead>
         <tbody>

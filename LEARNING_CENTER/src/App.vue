@@ -1,5 +1,5 @@
 <script setup>
-import { useStore } from './store';
+import { useStore } from './store/store';
 import { useTheme } from 'vuetify';
 const store = useStore();
 store.init();
@@ -10,7 +10,8 @@ const switchTheme = () => {
 </script>
 
 <template>
-  <v-btn @click="switchTheme"></v-btn>
+  <v-switch @click="switchTheme"></v-switch>
+  
   <RouterView/>
 </template>
 

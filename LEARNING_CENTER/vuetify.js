@@ -21,7 +21,7 @@ const baseDarkTheme = {
     colors: {
         background: '#121212',
         surface: '#1f1f1f',
-        primary: '#у65100',
+        primary: '#e65100',
         'on-primary': "#ffffff",
         'primary-hover': 'ff6f00',
         text: '#ffffff',

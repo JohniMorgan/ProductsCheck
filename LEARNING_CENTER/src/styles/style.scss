@@ -8,15 +8,14 @@ $active-hover-color: rgb(var(--v-theme-primary-hover));
 $active-text-color: rgb(var(--v-theme-on-primary));
 $text-colot: rgb(var(--v-theme-text));
 
-%centered {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+%default-centered {
     height: auto;
-    text-align: center;
     margin-left: auto;
     margin-right: auto;
+}
+
+.centered {
+    @extend %default-centered;
 }
 
 body {
@@ -48,8 +47,9 @@ a {
     }
 }
 .v-card {
-    width: 800px;
-    @extend %centered;
+    max-width: 800px;
+    padding: 15px;
+   @extend %default-centered;
 }
 .v-btn {
     background-color: $active-color;
@@ -58,4 +58,10 @@ a {
     &:hover {
         background-color: $active-hover-color;
     }
+}
+.v-switch__track {
+    background-color: $active-hover-color;
+}
+.v-switch__thumb {
+        background-color: $active-color;
 }

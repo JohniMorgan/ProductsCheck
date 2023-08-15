@@ -1,5 +1,5 @@
 <script setup>
-import { useStore } from "../store.js";
+import { useStore } from "../store/store.js";
 const store = useStore();
 function increment() {
   store.increment();
@@ -8,7 +8,7 @@ function increment() {
 
 <template>
   <v-card>
-      <v-btn @click="increment">count is {{ store.count }}</v-btn>
+      <v-btn @click="increment" class="centered">count is {{ store.count }}</v-btn>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR

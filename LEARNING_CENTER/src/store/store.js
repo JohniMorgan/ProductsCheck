@@ -4,6 +4,7 @@ export const useStore = defineStore('main', {
     state: () => ({
         count: 0,
         products: [],
+        headers: ['Название', 'Каллории', 'Белки', 'Жиры', 'Углеводы'],
     }),
     actions: {
         increment() {
@@ -18,5 +19,5 @@ export const useStore = defineStore('main', {
                 console.log(error);
             }
         }
-    }
+    },
 })
