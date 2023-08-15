@@ -11,6 +11,7 @@ const baseLightTheme = {
         primary: '#2196F3',
         'on-primary': '#ffffff',
         'primary-hover': '#64b5f6',
+        active: '#66bb6A',
         text: '#333333',
         graphic: '#4caf50',
     }
@@ -24,6 +25,7 @@ const baseDarkTheme = {
         primary: '#e65100',
         'on-primary': "#ffffff",
         'primary-hover': 'ff6f00',
+        active: '#ff7043',
         text: '#ffffff',
         graphic: '4caf50',
     }

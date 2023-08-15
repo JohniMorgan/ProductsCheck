@@ -1,16 +1,15 @@
 <script setup>
+import BaseHeader from './components/BaseHeader.vue';
 import { useStore } from './store/store';
-import { useTheme } from 'vuetify';
+
 const store = useStore();
 store.init();
-const theme = useTheme();
-const switchTheme = () => {
-  theme.global.name.value = theme.global.current.value.dark ? 'baseLightTheme' : 'baseDarkTheme';
-}
+
 </script>
 
 <template>
-  <v-switch @click="switchTheme"></v-switch>
+  
+  <BaseHeader/>
   
   <RouterView/>
 </template>
