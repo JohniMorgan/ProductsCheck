@@ -12,6 +12,11 @@ const dateToString = computed(() => {
     return `${day}.${month}.${year}`
 });
 
+function inOkInput(event) {
+  console.log(event);
+  selectedDate.value = event;
+};
+
 </script>
 
 <template>
@@ -24,13 +29,14 @@ const dateToString = computed(() => {
       >{{ dateToString }}</v-btn>
     </template>
     <v-locale-provider locale="ru">
-        <v-date-picker
-        v-model="selectedDate"
-        @input="menu = false"
+      <v-date-picker
+        @update:model-value="inOkInput"
+        :model-value="selectedDate"
         ok-text="ОК"
         cancel-text="Отмена"
+        header="Выберите дату"
         title="Выберите дату">
-    </v-date-picker>
+      </v-date-picker>
     </v-locale-provider>
 </v-menu>
 </template>

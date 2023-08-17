@@ -1,6 +1,5 @@
 import {createVuetify} from 'vuetify';
-import DayJsAdapter from '@date-io/dayjs'
-import ruRu from 'date-fns/'
+import { VuetifyDateAdapter } from 'vuetify/labs/date/adapters/vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import './src/styles/style.scss';
@@ -47,9 +46,6 @@ export default createVuetify({
         }
     },
     date: {
-        adapter: DayJsAdapter,
-        locale: {
-            ru: ruRu
-        }
+        adapter: VuetifyDateAdapter,
     }
 })
