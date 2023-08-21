@@ -22,7 +22,7 @@ const sumCalories = computed(() => {
     getArray.value.forEach(element => {
         sum += store.getCalories(element.food) * element.count/100;
     });
-   return sum
+    return sum
 });
 
 

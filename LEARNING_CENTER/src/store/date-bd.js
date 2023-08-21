@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useStore } from './store';
 
 export const useDateDB = defineStore('date-db', {
     state: () => ({
@@ -24,7 +25,8 @@ export const useDateDB = defineStore('date-db', {
                 date: current_date,
                 morning: [],
                 lanch: [],
-                meal: []
+                meal: [],
+                total: 0,
             }
             this.days.push(temp);
             return temp;
@@ -48,11 +50,13 @@ export const useDateDB = defineStore('date-db', {
                 food: Number (id);
 
             */ 
-            const day = this.findDay(this.dayAsString);
+            let day = this.findDay();
             day[params.time].push({
                 food: params.food,
                 count: params.count
             });
+            const foods = useStore();
+            day.total += foods.getCalories(params.food) * (params.count / 100);
         }
     },
     getters: {

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'; 
+import { ref, computed } from 'vue'; 
 import BaseCheckList from './BaseCheckList.vue';
 import BaseCountWindow from './BaseCountWindow.vue';
 import CardMealTime from './CardMealTime.vue';
@@ -20,9 +20,6 @@ function goToSecondStep(event) {
     step.value = 2;
 };
 function collectData(event) {
-    console.log("Будут сформированны следующие params");
-    console.log("key: " + time.value);
-    console.log("food: Object{type: " + choose.value + ", count: " + event.value + "}");
     db.addFood({
         time: time.value,
         food: choose.value,
@@ -30,6 +27,10 @@ function collectData(event) {
     });
     step.value = 1;
 }
+const totalCalories = computed(() => {
+    return db.findDay().total
+});
+
 
 </script>
 
@@ -38,6 +39,7 @@ function collectData(event) {
     <v-window-item
     :value="1">
         <BaseDatePicker/>
+        <v-input label>Всего употреблено {{ totalCalories }}</v-input>
         <CardMealTime
         title="Завтрак"
         time="morning"
