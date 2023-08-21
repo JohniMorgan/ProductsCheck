@@ -6,7 +6,6 @@ import SearchInput from '../InformationPage/SearchInput.vue';
 
 const store = useStore();
 const msg = ref("");
-const selected = ref(null);
 const started = ref(false);
 
 const actualProducts = computed(() => store.products.filter(
@@ -15,8 +14,7 @@ const actualProducts = computed(() => store.products.filter(
     }));
 
 function addToChoosen(event) {
-    selected.value = event.trigger;
-    emit('next-step', {value: selected.value});
+    emit('next-step', {value: event.trigger});
 };
 function onInput(event) {
     msg.value = event.value;

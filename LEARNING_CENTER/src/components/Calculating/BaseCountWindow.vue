@@ -4,23 +4,29 @@ import { useStore } from '../../store/store';
 const store = useStore();
 const count = ref(100);
 const props = defineProps({
-   selected: Object 
+   selected: Number 
 });
-const emit = defineEmits(['back-step']);
+const emit = defineEmits(['back-step', 'submit']);
 const withoutFirst = computed(() => {
    return store.headers.slice(1);
 });
 const withoutName = computed(() => {
-   const {['name']: removedField, ...newObject } = props.selected;
+   const {id, name, ...newObject} = food.value;
    console.log(newObject);
    return newObject;
 });
+const food = computed(() => {
+    console.log(store.getById(props.selected));
+   return store.getById(props.selected)
+});
+
+
+
 function close() {
    emit('back-step');
 };
 function submit() {
-   console.log("submit product");
-   console.log(props.selected.name + " " + count.value);
+   emit('submit', {value: count.value});
 };
 
 
@@ -31,7 +37,7 @@ function submit() {
     <v-input
     append-icon="mdi-backspace-outline"
     @click:append="close">
-        Выбрано {{ selected.name }}
+        Выбрано {{ food.name }}
     </v-input>
     <v-divider/>
     <v-text-field

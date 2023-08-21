@@ -36,23 +36,6 @@ function decPage() {
 </script>
 
 <template>
-    <!--<v-table fixed-header>
-        <thead>
-        <tr>
-            <th v-for="title in store.headers">{{title}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(product, index) in actualProducts"
-        :key="index">
-            <td>{{ product.name }}</td>
-            <td>{{ product.calories }}</td>
-            <td>{{ product.proteins }}</td>
-            <td>{{ product.fats }}</td>
-            <td>{{ product.carbs }}</td>
-        </tr>
-        </tbody>
-    </v-table>-->
     <v-data-table
     v-model:page="currentPage"
     :items="actualProducts"
