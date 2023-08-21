@@ -1,0 +1,82 @@
+@use 'vuetify' with (
+  $utilities: false,
+  $color-pack: false,
+);
+
+$active-color: rgb(var(--v-theme-primary));
+$active-hover-color: rgb(var(--v-theme-primary-hover));
+$surface-color: rgb(var(--v-theme-surface));
+$active-text-color: rgb(var(--v-theme-on-primary));
+$text-color: rgb(var(--v-theme-text));
+$active-choose-color: rgb(var(--v-theme-active));
+
+%default-centered {
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.centered {
+    @extend %default-centered;
+}
+
+body {
+    font: {
+        family: 'Arial', sans-serif;
+        size: 16px;
+    }
+    line-height: 1.5;
+    color: rgb(var(--v-theme-text));
+}
+
+h1, h2, h3 {
+    font: {
+        family: 'Roboto', sans-serif;
+        weight: bold;
+    }
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: $active-color;
+
+    &:hover {
+        color: $active-hover-color;
+    }
+}
+.v-card {
+    max-width: 800px;
+    padding: 15px;
+   @extend %default-centered;
+}
+.v-btn {
+    background-color: $active-color;
+    color: $active-text-color;
+
+    &:hover {
+        background-color: $active-hover-color;
+    }
+    &.v-btn--active {
+        background-color: $active-choose-color !important;
+    }
+}
+.v-switch__track {
+    background-color: $active-hover-color;
+}
+.v-switch__thumb {
+        background-color: $active-color;
+}
+
+
+@each $container in ('month__day', 'controls__month', 'controls', 'header') {
+    .v-date-picker-#{$container} {
+        .v-btn {
+            background-color: $surface-color;
+            color: $text-color
+        }
+    }
+}
