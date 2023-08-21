@@ -29,12 +29,13 @@ export const useDateDB = defineStore('date-db', {
                 total: 0,
             }
             this.days.push(temp);
+            this.updateStorage();
             return temp;
+            
         },
         //Функция возвращающая объект сегодняшнего дня
         findDay() {
             const now = this.dayAsString;
-            console.log(now);
             let current =  this.days.find((day) => {
                 return day.date == now;
             })
@@ -57,6 +58,15 @@ export const useDateDB = defineStore('date-db', {
             });
             const foods = useStore();
             day.total += foods.getCalories(params.food) * (params.count / 100);
+            this.updateStorage();
+        },
+        updateStorage() {
+            localStorage.setItem('DaysData', JSON.stringify(this.days));
+        },
+        init() {
+            console.log(localStorage.getItem('DaysData'));
+            const initData = localStorage.getItem('DaysData');
+            this.days = initData ? JSON.parse(initData) : [];
         }
     },
     getters: {
@@ -66,6 +76,6 @@ export const useDateDB = defineStore('date-db', {
             const month = String(state.nowDate.getMonth() + 1).padStart(2,'0');
             const year = state.nowDate.getFullYear()
             return `${day}.${month}.${year}`
-        }
+        },
     }
 });

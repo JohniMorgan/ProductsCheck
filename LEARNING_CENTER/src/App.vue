@@ -1,9 +1,12 @@
 <script setup>
 import BaseHeader from './components/BaseHeader.vue';
+import { useDateDB } from './store/date-bd';
 import { useStore } from './store/store';
 
 const store = useStore();
+const db = useDateDB();
 store.init();
+db.init();
 
 </script>
 

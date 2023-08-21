@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'; 
+import { ref, computed, onBeforeMount } from 'vue'; 
 import BaseCheckList from './BaseCheckList.vue';
 import BaseCountWindow from './BaseCountWindow.vue';
 import CardMealTime from './CardMealTime.vue';
@@ -31,7 +31,10 @@ const totalCalories = computed(() => {
     return db.findDay().total
 });
 
-
+onBeforeMount(() => {
+    console.log("before mount")
+    console.log(db.findDay());
+});
 </script>
 
 <template>
