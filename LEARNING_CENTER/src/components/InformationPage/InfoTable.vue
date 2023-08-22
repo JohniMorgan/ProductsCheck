@@ -17,12 +17,13 @@ const head = [
     {title: 'Белки', align: 'end', key: 'proteins'},
     {title: 'Жиры', align: 'end', key: 'fats'},
     {title: 'Углеводы', align: 'end', key: 'carbs'},
+    {title: 'Действия',align: 'center', key:'actions', sortable: false},
 ]
 const props = defineProps ({
     keyWord: String
 });
 const actualProducts = computed(() => {
-    return store.products.filter((product, index) => {
+    return store.products.filter((product) => {
         return product.name.toLowerCase().includes(props.keyWord.toLowerCase());
     })
 });
@@ -49,6 +50,15 @@ function openDialog() {
     items-per-page="7"
     hide-default-footer
     >
+    <template v-slot:item.actions="{ item }">
+        <div v-if="item.raw.custom">
+            <v-icon>mdi-pencil</v-icon>
+            <v-icon 
+            @click="store.deleteCustomProduct(item.raw)">
+            mdi-delete</v-icon>
+        </div>
+        <v-icon v-else>mdi-minus</v-icon>
+    </template>
     <!--
     Нижняя часть таблицы, тулбар
     -->

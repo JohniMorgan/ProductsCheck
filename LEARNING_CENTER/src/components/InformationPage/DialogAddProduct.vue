@@ -17,25 +17,25 @@ const formInfo = ref([
     {
         title: 'Калории (кКл)',
         value: '0',
-        pattern: /[0-9]{1,}/,
+        pattern: /^[0-9]{1,}[\.,\,]{0,1}[0-9]{1,}$/,
         type: 'число',
     },
     {
         title: 'Белки (г)',
         value: '0',
-        pattern: /[0-9]{1,}/,
+        pattern: /^[0-9]{1,}[\.,\,]{0,1}[0-9]{1,}$/,
         type: 'число',
     },
     {
         title: 'Жиры (г)',
         value: '0',
-        pattern: /[0-9]{1,}/,
+        pattern: /^[0-9]{1,}[\.,\,]{0,1}[0-9]{1,}$/,
         type: 'число',
     },
     {
         title: 'Углеводы (г)',
         value: '0',
-        pattern: /[0-9]{1,}/,
+        pattern: /^[0-9]{1,}[\.,\,]{0,1}[0-9]{1,}$/,
         type: 'число',
     }
 ]);
@@ -46,8 +46,8 @@ function close() {
 function submit() {
     let data = formInfo.value;
     store.addCustomProduct({
-        name: data[0].value + ' кКал',
-        calories: data[1].value + ' г',
+        name: data[0].value,
+        calories: data[1].value + ' кКал',
         proteins: data[2].value + ' г',
         fats: data[3].value + ' г',
         carbs: data[4].value + ' г',

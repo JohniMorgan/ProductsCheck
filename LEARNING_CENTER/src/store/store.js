@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 
+const ITEM_TAG = 'ProductsInfoData';
+
 export const useStore = defineStore('main', {
     state: () => ({
         lastId: 0,
@@ -8,17 +10,28 @@ export const useStore = defineStore('main', {
     }),
     actions: {
         async init() {
-            try {
-                const response = await fetch('/food_base.json');
-                const data = await response.json();
-                this.products = data.map((element, index) => {
-                    //Добавляем элементы в массив, но с доп полем id
-                    return { ...element, id: index + 1 };
-                  });
-                this.lastId = this.products[this.products.length-1].id;
-            } catch (error) {
-                console.log(error);
+            console.log(localStorage.getItem(ITEM_TAG));
+            const initData = localStorage.getItem(ITEM_TAG);
+            if (!initData) {
+                try {
+                    const response = await fetch('/food_base.json');
+                    const data = await response.json();
+                    this.products = data.map((element, index) => {
+                        //Добавляем элементы в массив, но с доп полем id
+                        return { ...element, id: index + 1 };
+                    });
+                    localStorage.setItem(ITEM_TAG, JSON.stringify(this.products));
+                } catch (error) {
+                    console.log(error);
+                }
             }
+            else {
+                this.products = JSON.parse(initData);
+            }
+            this.lastId = this.products[this.products.length-1].id;
+        },
+        updateStorage() {
+            localStorage.setItem(ITEM_TAG, JSON.stringify(this.products));
         },
         getCalories(id) {
             let calories = this.getById(id).calories;
@@ -26,9 +39,15 @@ export const useStore = defineStore('main', {
             return Number(calories.slice(0, endIndex));
         },
         addCustomProduct(product) {
-            this.products.push({...product, id: this.lastId + 1});
+            this.products.push({...product, id: this.lastId + 1, custom: true});
             this.lastId += 1;
             console.log(this.products[this.products.length-1]);
+            this.updateStorage();
+        },
+        deleteCustomProduct(product) {
+            const index = this.products.indexOf(product);
+            this.products.splice(index, 1);
+            this.updateStorage();
         }
     },
     getters: {

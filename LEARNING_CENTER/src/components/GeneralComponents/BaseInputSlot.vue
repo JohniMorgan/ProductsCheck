@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue';
+import { defineProps, defineEmits, ref, computed } from 'vue';
 const props = defineProps({
     value: String,
     name: String,
@@ -7,10 +7,15 @@ const props = defineProps({
     test:  Object,
 });
 const emit = defineEmits(['change']);
+const testResult = computed(() => {
+    return props.test.test(props.value);
+});
 
 const rules = ref([
     value => !!value || 'Поле должно быть заполнено',
-    value => props.test.test(value) || `Вы должны ввести ${props.pattern}` 
+    value => {
+        return props.test.test(value) || `Вы должны ввести ${props.pattern}`;
+    }  
 ])
 
 function onInput(event) {
@@ -28,6 +33,7 @@ function onInput(event) {
     :model-value="value"
     @input="onInput">
     </v-text-field>
+    <v-input>{{ testResult }}</v-input>
 </template>
 
 <style scoped lang='scss'>
