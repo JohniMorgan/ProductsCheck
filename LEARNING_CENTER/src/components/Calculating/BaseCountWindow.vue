@@ -26,7 +26,7 @@ function close() {
    emit('back-step');
 };
 function submit() {
-   emit('submit', {value: count.value});
+   emit('submit', {value: Number(count.value)});
 };
 
 

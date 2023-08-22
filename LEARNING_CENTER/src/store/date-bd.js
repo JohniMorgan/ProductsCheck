@@ -44,12 +44,14 @@ export const useDateDB = defineStore('date-db', {
         },
         //Функция добавления в текущий день съеденного
         addFood(params) {
-            /*params : {
-                |--В какой приём пищи добавить--|
-                time: {morning/lanch/meal},
-                |--Пища которая добавляется, а так же количество съеденного--|
-                food: Number (id);
-
+            /*
+            params : {
+                //В какой приём пищи добавить\\
+                time: {morning/lanch/meal}
+                //Пища которая добавляется\\
+                food: Number (id),
+                //Количество съеденного\\
+                count: Number (count);
             */ 
             let day = this.findDay();
             day[params.time].push({
@@ -59,6 +61,24 @@ export const useDateDB = defineStore('date-db', {
             const foods = useStore();
             day.total += foods.getCalories(params.food) * (params.count / 100);
             this.updateStorage();
+        },
+        //Удаление продукта из приёма пищи
+        deleteFood(params) {
+            /*
+                params : {
+                    //Приём пищи\\
+                    time: {morning/lanch/meal}
+                    //Позиция в массиве
+                    index: Number
+                }
+            */
+           let day = this.findDay();
+           const foods = useStore();
+           let value = foods.getCalories(day[params.time][params.index].food);
+           day.total -= value * (day[params.time])[params.index].count / 100;
+           day[params.time].splice(params.index, 1);
+           
+           this.updateStorage();
         },
         updateStorage() {
             localStorage.setItem('DaysData', JSON.stringify(this.days));

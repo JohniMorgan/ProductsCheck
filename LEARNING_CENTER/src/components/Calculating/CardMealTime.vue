@@ -2,6 +2,7 @@
 import { defineProps, defineEmits, computed } from 'vue';
 import { useDateDB } from '../../store/date-bd';
 import { useStore } from '../../store/store';
+import BaseFoodRecord from '../GeneralComponents/BaseFoodRecord.vue';
 const db = useDateDB();
 const store = useStore();
 
@@ -30,6 +31,15 @@ function triggered() {
    emit('triggered', {value: props.time})
 };
 
+function onDeletTrigger(index) {
+    console.log(index);
+    db.deleteFood({
+        time: props.time,
+        index: index,
+    })
+};
+
+
 </script>
 
 <template>
@@ -44,9 +54,11 @@ function triggered() {
             >{{ title }}</v-input>
         </v-col>
         <v-col cols="8">
-            <v-input v-for="(el, index) in getArray" :key="index">
-                {{ store.getById(el.food).name }} - съедено {{ el.count }} гр.
-            </v-input>
+            <base-food-record
+            v-for="(el, index) in getArray"
+            :key="index"
+            v-bind="el"
+            @delete="onDeletTrigger(index)"/>
         </v-col>
         <v-col cols="2">
             <v-btn
