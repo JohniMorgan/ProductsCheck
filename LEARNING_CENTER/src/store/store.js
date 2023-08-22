@@ -2,14 +2,11 @@ import { defineStore } from 'pinia';
 
 export const useStore = defineStore('main', {
     state: () => ({
-        count: 0,
+        lastId: 0,
         products: [],
         headers: ['Название', 'Каллории', 'Белки', 'Жиры', 'Углеводы'],
     }),
     actions: {
-        increment() {
-            this.count++
-        },
         async init() {
             try {
                 const response = await fetch('/food_base.json');
@@ -18,6 +15,7 @@ export const useStore = defineStore('main', {
                     //Добавляем элементы в массив, но с доп полем id
                     return { ...element, id: index + 1 };
                   });
+                this.lastId = this.products[this.products.length-1].id;
             } catch (error) {
                 console.log(error);
             }
@@ -26,6 +24,11 @@ export const useStore = defineStore('main', {
             let calories = this.getById(id).calories;
             const endIndex = calories.indexOf('к');
             return Number(calories.slice(0, endIndex));
+        },
+        addCustomProduct(product) {
+            this.products.push({...product, id: this.lastId + 1});
+            this.lastId += 1;
+            console.log(this.products[this.products.length-1]);
         }
     },
     getters: {

@@ -2,7 +2,9 @@
 import { useStore } from '../../store/store';
 import { defineProps, computed, ref } from 'vue';
 import { VDataTable } from 'vuetify/lib/labs/components.mjs';
+import DialogAddProduct from './DialogAddProduct.vue'
 const store = useStore();
+const dialog = ref(false);
 const head = [
     {
         title: 'Название',
@@ -31,6 +33,10 @@ const countPage = computed(() => {
 function decPage() {
    if (currentPage.value != 1) currentPage.value--
 };
+function openDialog() {
+    dialog.value = true;
+    console.log(dialog.value);
+};
 
 
 </script>
@@ -43,20 +49,33 @@ function decPage() {
     items-per-page="7"
     hide-default-footer
     >
+    <!--
+    Нижняя часть таблицы, тулбар
+    -->
     <template v-slot:bottom>
+    <v-row>
+        <v-col cols="2">
         <v-input
         prepend-icon="mdi-minus"
-        @click:prepend="decPage"
-    >
-        <template v-slot:default>
-            <label>{{currentPage}} / {{ countPage }}</label>
-        </template>
-        <template v-slot:append>
-                <v-icon @click="currentPage++">mdi-plus</v-icon> 
-        </template>
-    </v-input>
+        @click:prepend="decPage">
+            <template v-slot:default>
+                <label>{{currentPage}} / {{ countPage }}</label>
+            </template>
+            <template v-slot:append>
+                    <v-icon @click="currentPage++">mdi-plus</v-icon> 
+            </template>
+        </v-input>
+        </v-col>
+        <v-col cols="8">
+        </v-col>
+        <v-col cols="2">
+            <v-btn @click="openDialog">Добавить</v-btn>
+        </v-col>
+    </v-row>
     </template>
     </v-data-table>
+    <dialog-add-product
+    v-model:open="dialog"/>
 </template>
 
 <style scoped lang="scss">
@@ -69,5 +88,9 @@ function decPage() {
     label {
         margin-right: auto;
         margin-left: auto;
+    }
+    .v-col {
+        display: flex;
+        justify-items: center;
     }
 </style>
