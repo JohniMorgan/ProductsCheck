@@ -41,7 +41,9 @@ onBeforeMount(() => {
 <v-window v-model="step">
     <v-window-item
     :value="1">
-        <BaseDatePicker/>
+        <BaseDatePicker
+        :date="db.nowDate"
+        @update:date="db.changeDate($event)"/>
         <v-input label>Всего употреблено {{ totalCalories }}</v-input>
         <CardMealTime
         title="Завтрак"

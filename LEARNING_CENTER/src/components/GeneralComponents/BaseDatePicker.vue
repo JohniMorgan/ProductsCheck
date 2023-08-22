@@ -1,25 +1,25 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { VDatePicker } from 'vuetify/lib/labs/components.mjs';
-import { useDateDB } from '../../store/date-bd';
+
+const props = defineProps({
+    date: Date 
+});
+const emit = defineEmits(['update:date']);
 
 const menu = ref(false);
-const db = useDateDB();
+//const db = useDateDB();
 
 const dateToString = computed(() => {
-    const day = String(db.nowDate.getDate()).padStart(2, '0');
-    const month = String(db.nowDate.getMonth() + 1).padStart(2,'0');
-    const year = db.nowDate.getFullYear()
+    const day = String(props.date.getDate()).padStart(2, '0');
+    const month = String(props.date.getMonth() + 1).padStart(2,'0');
+    const year = props.date.getFullYear()
     return `${day}.${month}.${year}`
 });
 
 function inOkInput(event) {
-  db.changeDate(event);
+  emit('update:date', event);
 };
-
-const current = computed(() => {
-   return db.findDay();
-});
 
 
 </script>
@@ -32,12 +32,11 @@ const current = computed(() => {
         prepend-icon="mdi-calendar"
         readonly
       >{{ dateToString }}</v-btn>
-      <v-input>{{ current }}</v-input>
     </template>
     <v-locale-provider locale="ru">
       <v-date-picker
         @update:model-value="inOkInput"
-        :model-value="db.nowDate"
+        :model-value="date"
         ok-text="ОК"
         cancel-text="Отмена"
         header="Выберите дату"
