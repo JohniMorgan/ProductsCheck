@@ -56,7 +56,6 @@ const periodDataDates = computed(() => {
     v-model:date="firstDate"/>
     <base-date-picker
     v-model:date="lastDate"/>
-    <v-input>Статистика последнего дня: {{ periodStatistic }}</v-input>
     <v-row>
         <v-col cols="6">
             <report-view-model
@@ -85,6 +84,7 @@ const periodDataDates = computed(() => {
             :labels="periodDataDates"/>
         </v-col>
     </v-row>
+
     
 </template>
 

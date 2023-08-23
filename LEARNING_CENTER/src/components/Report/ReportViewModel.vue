@@ -18,20 +18,28 @@ const chartData = computed(() => {
         labels: props.labels,
         datasets: [
             {
-                label: props.title,
                 data: props.data,
                 pointRadius: 5,
                 //backgroundColor: colors.value.colors['primary-hover'],
                 backgroundColor: '#00BFFF',
                 //borderColor: colors.value.colors.primary
                 borderColor: '#007BFF'
-            }
+            },
         ]
     }
 });
 const chartOptions = computed(() => {
     return {
         responsive: true,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            title: {
+                display: true,
+                text: props.title,
+            }
+        },
         scales: {
             x:{
                 grid: {
@@ -66,7 +74,7 @@ const chartOptions = computed(() => {
 
 <template>
     <div class="theme-bind">
-        <Bar :data="chartData" :options="chartOptions"/>
+        <Line :data="chartData" :options="chartOptions"/>
     </div>
 </template>
 
@@ -75,23 +83,25 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  LineElement,
+  PointElement,
   Title,
   Tooltip,
   Legend
 } from 'chart.js'
-import { Bar } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  LineElement,
+  PointElement,
   Title,
   Tooltip,
   Legend
 )
 export default {   
-    extends: Bar,
+    extends: Line,
 }
 </script>
 
