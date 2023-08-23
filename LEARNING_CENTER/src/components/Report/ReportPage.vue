@@ -52,22 +52,31 @@ const periodDataDates = computed(() => {
 </script>
 
 <template>
-    <base-date-picker
-    v-model:date="firstDate"/>
-    <base-date-picker
-    v-model:date="lastDate"/>
+<v-container>
+    <v-row justify="center">
+    <v-col cols="3">
+        <base-date-picker
+        v-model:date="firstDate"/>
+    </v-col>
+    <v-col cols="3">
+        <base-date-picker
+        v-model:date="lastDate"/>
+    </v-col>
+    </v-row>
     <v-row>
         <v-col cols="6">
             <report-view-model
             title="Каллории (кКал)"
             :data="periodStatistic.calories"
-            :labels="periodDataDates"/>
+            :labels="periodDataDates"
+            type="calories"/>
         </v-col>
         <v-col>
             <report-view-model
             title="Белки (г)"
             :data="periodStatistic.proteins"
-            :labels="periodDataDates"/>
+            :labels="periodDataDates"
+            type="proteins"/>
         </v-col>
     </v-row>
     <v-row>
@@ -75,21 +84,30 @@ const periodDataDates = computed(() => {
             <report-view-model
             title="Жиры (г)"
             :data="periodStatistic.fats"
-            :labels="periodDataDates"/>
+            :labels="periodDataDates"
+            type="fats"/>
         </v-col>
         <v-col>
             <report-view-model
             title="Углеводы (г)"
             :data="periodStatistic.carbs"
-            :labels="periodDataDates"/>
+            :labels="periodDataDates"
+            type="carbs"/>
         </v-col>
     </v-row>
-
-    
+</v-container>
 </template>
 
 
 
 <style scoped lang='scss'>
+    .justify-center {
+        justify-content: center;
+
+        .v-col {
+            display: flex;
+            justify-content: center;
+        }
+    }
 
 </style>

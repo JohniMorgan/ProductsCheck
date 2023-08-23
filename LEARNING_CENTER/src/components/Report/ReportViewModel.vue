@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import {useTheme} from 'vuetify';
+import theme from '../../styles/chart_colorsheet';
 
 const colors = ref(useTheme().current);
 
@@ -8,8 +9,12 @@ const props = defineProps({
     data: Object,
     labels: Object,
     title: String,
+    type: String
 });
 
+const themeColors = computed(() => {
+    return colors.value.dark ? theme.darkColorSheet : theme.lightColorSheet;
+});
 
 
 
@@ -21,9 +26,9 @@ const chartData = computed(() => {
                 data: props.data,
                 pointRadius: 5,
                 //backgroundColor: colors.value.colors['primary-hover'],
-                backgroundColor: '#00BFFF',
+                backgroundColor: themeColors.value.colors[props.type].point,
                 //borderColor: colors.value.colors.primary
-                borderColor: '#007BFF'
+                borderColor: themeColors.value.colors[props.type].line
             },
         ]
     }
