@@ -101,12 +101,16 @@ const periodDataDates = computed(() => {
 
 
 <style scoped lang='scss'>
-    .justify-center {
-        justify-content: center;
 
-        .v-col {
-            display: flex;
+    .v-container {
+        width: 70%;
+        .justify-center {
             justify-content: center;
+
+            .v-col {
+                display: flex;
+                justify-content: center;
+            }
         }
     }
 
