@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import HelloWorldVue from './components/HelloWorld.vue';
 import InfoPage from './components/InformationPage/InfoPage.vue';
 import ChooseWindow from './components/Calculating/ChooseWindow.vue';
+import ReportPage from './components/Report/ReportPage.vue'
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         path: '/calculate',
         name: "Calculating",
         component: ChooseWindow
+    },
+    {
+        path: '/report',
+        name: 'Report',
+        component: ReportPage
     }
 ]
 

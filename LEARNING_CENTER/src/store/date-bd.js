@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { useStore } from './store';
 
+
 export const useDateDB = defineStore('date-db', {
     state: () => ({
         days: [],
@@ -34,13 +35,19 @@ export const useDateDB = defineStore('date-db', {
             
         },
         //Функция возвращающая объект сегодняшнего дня
-        findDay() {
-            const now = this.dayAsString;
+        getDay() {
+            const now = this.currentDayAsString;
             let current =  this.days.find((day) => {
                 return day.date == now;
             })
             if (current == null) current = this.addNewDay(now);
             return current; 
+        },
+        findDay(dayString) {
+            let current = this.days.find(day => {
+                return day.date == dayString;
+            })
+            return current;
         },
         //Функция добавления в текущий день съеденного
         addFood(params) {
@@ -53,12 +60,14 @@ export const useDateDB = defineStore('date-db', {
                 //Количество съеденного\\
                 count: Number (count);
             */ 
-            let day = this.findDay();
+            let day = this.getDay();
+            console.log(day);
             day[params.time].push({
                 food: params.food,
                 count: params.count
             });
             const foods = useStore();
+            console.log(foods.getCalories(params.food));
             day.total += foods.getCalories(params.food) * (params.count / 100);
             this.updateStorage();
         },
@@ -72,7 +81,7 @@ export const useDateDB = defineStore('date-db', {
                     index: Number
                 }
             */
-           let day = this.findDay();
+           let day = this.getDay();
            const foods = useStore();
            let value = foods.getCalories(day[params.time][params.index].food);
            day.total -= value * (day[params.time])[params.index].count / 100;
@@ -87,11 +96,30 @@ export const useDateDB = defineStore('date-db', {
             console.log(localStorage.getItem('DaysData'));
             const initData = localStorage.getItem('DaysData');
             this.days = initData ? JSON.parse(initData) : [];
+        },
+        dayStatistic(dayString) {
+            const day = this.findDay(dayString);
+            let statistic = {
+                calories: 0,
+                proteins: 0,
+                fats: 0,
+                carbs: 0,
+            };
+            const foods = useStore();
+            for (let part of ['morning', 'lanch', 'meal']) {
+                day[part].forEach(el => {
+                    statistic.calories += foods.getCalories(el.food) * (el.count / 100);
+                    statistic.proteins += foods.getOther(el.food, 'proteins') * (el.count / 100);
+                    statistic.fats += foods.getOther(el.food, 'fats') * (el.count / 100);
+                    statistic.carbs += foods.getOther(el.food, 'carbs') * (el.count / 100);
+                });
+            }
+            return statistic;
         }
     },
     getters: {
         //Возвращаем дату в формате dd.mm.yyyy
-        dayAsString: (state) => {
+        currentDayAsString: (state) => {
             const day = String(state.nowDate.getDate()).padStart(2, '0');
             const month = String(state.nowDate.getMonth() + 1).padStart(2,'0');
             const year = state.nowDate.getFullYear()

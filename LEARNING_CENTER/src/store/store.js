@@ -10,7 +10,6 @@ export const useStore = defineStore('main', {
     }),
     actions: {
         async init() {
-            console.log(localStorage.getItem(ITEM_TAG));
             const initData = localStorage.getItem(ITEM_TAG);
             if (!initData) {
                 try {
@@ -36,7 +35,12 @@ export const useStore = defineStore('main', {
         getCalories(id) {
             let calories = this.getById(id).calories;
             const endIndex = calories.indexOf('к');
-            return Number(calories.slice(0, endIndex));
+            return Number(calories.replace(',', '.').slice(0, endIndex));
+        },
+        getOther(id, category) {
+            let other = this.getById(id)[category];
+            const endIndex = other.indexOf('г');
+            return Number(other.replace(',', '.').slice(0, endIndex));
         },
         addCustomProduct(product) {
             this.products.push({...product, id: this.lastId + 1, custom: true});

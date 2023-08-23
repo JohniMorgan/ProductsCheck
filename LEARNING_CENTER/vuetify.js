@@ -39,7 +39,7 @@ export default createVuetify({
         defaultSet: 'mdi',
     },
     theme: {
-        defaultTheme: 'baseLightTheme',
+        defaultTheme: 'baseDarkTheme',
         themes: {
             baseLightTheme,
             baseDarkTheme

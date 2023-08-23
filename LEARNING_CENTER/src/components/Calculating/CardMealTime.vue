@@ -15,7 +15,7 @@ const props = defineProps({
 const emit = defineEmits(['triggered']);
 
 const getArray = computed(() => {
-   return db.findDay()[props.time];
+   return db.getDay()[props.time];
 });
 
 const sumCalories = computed(() => {
