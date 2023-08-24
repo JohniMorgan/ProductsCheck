@@ -28,7 +28,7 @@ function collectData(event) {
     step.value = 1;
 }
 const totalCalories = computed(() => {
-    return db.getDay().total
+    return db.dayStatistic(db.currentDayAsString).calories;
 });
 
 onBeforeMount(() => {
@@ -41,28 +41,54 @@ onBeforeMount(() => {
 <v-window v-model="step">
     <v-window-item
     :value="1">
-        <BaseDatePicker
-        :date="db.nowDate"
-        @update:date="db.changeDate($event)"/>
-        <v-input label>Всего употреблено {{ totalCalories }}</v-input>
-        <CardMealTime
-        title="Завтрак"
-        time="morning"
-        icon="mdi-weather-sunny"
-        :color="'#d5e000'"
-        @triggered="goToSecondStep"/>
-        <CardMealTime
-        title="Обед"
-        time="lanch"
-        icon="mdi-clock-time-one-outline"
-        :color="'#ff8a0d'"
-        @triggered="goToSecondStep"/>
-        <CardMealTime
-        title="Ужин"
-        time="meal"
-        icon="mdi-pasta"
-        :color="'#bb04c2'"
-        @triggered="goToSecondStep"/>
+    <v-row class="bar">
+        <v-col cols="3">
+            <BaseDatePicker
+            :date="db.nowDate"
+            @update:date="db.changeDate($event)"/>
+        </v-col>
+        <v-col class="justify-self-end">
+            <label>Всего: </label>
+        </v-col>
+        <v-col cols="2">
+        <v-progress-circular
+        :model-value="totalCalories/2500 * 100"
+        color="#00FF00"
+        :size="70"
+        width="7">{{ totalCalories }}</v-progress-circular>
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col>
+            <CardMealTime
+            title="Завтрак"
+            time="morning"
+            icon="mdi-weather-sunny"
+            :color="'#d5e000'"
+            @triggered="goToSecondStep"/>
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col>
+            <CardMealTime
+            title="Обед"
+            time="lanch"
+            icon="mdi-clock-time-one-outline"
+            :color="'#ff8a0d'"
+            @triggered="goToSecondStep"/>
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col>
+            <CardMealTime
+            title="Ужин"
+            time="meal"
+            icon="mdi-pasta"
+            :color="'#bb04c2'"
+            @triggered="goToSecondStep"/>
+        </v-col>
+    </v-row>
+        
     </v-window-item>
     <v-window-item
     :value="2">
@@ -81,5 +107,19 @@ onBeforeMount(() => {
 </template>
 
 <style scoped lang='scss'>
+    .v-window {
+        width: 70%;
+        margin-left: auto;
+        margin-right:auto;
+    }
+    .bar {
+        .v-col {
+            display: flex;
+            align-items: center;
 
+            &.justify-self-end {
+                justify-content: end;
+            }
+        }
+    }
 </style>

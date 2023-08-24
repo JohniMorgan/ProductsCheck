@@ -1,12 +1,17 @@
 <script setup>
 import BaseInputSlot from '../GeneralComponents/BaseInputSlot.vue';
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, onBeforeUpdate, computed } from 'vue';
 import { useStore } from '../../store/store';
 const props = defineProps({
-    open: Boolean, 
+    open: Boolean,
+    productId: {
+       type: Number,
+       required: true,
+    }  
 });
 const emit = defineEmits(['update:open']);
 const store = useStore();
+
 const formInfo = ref([
     {
         title: 'Название продукта',
@@ -16,42 +21,68 @@ const formInfo = ref([
     },
     {
         title: 'Калории (кКл)',
-        value: '0',
+        value: '',
         pattern: /^[0-9]{1,}[\.,\,]{0,1}[0-9]{1,}$/,
         type: 'число',
     },
     {
         title: 'Белки (г)',
-        value: '0',
+        value: '',
         pattern: /^[0-9]{1,}[\.,\,]{0,1}[0-9]{1,}$/,
         type: 'число',
     },
     {
         title: 'Жиры (г)',
-        value: '0',
+        value: '',
         pattern: /^[0-9]{1,}[\.,\,]{0,1}[0-9]{1,}$/,
         type: 'число',
     },
     {
         title: 'Углеводы (г)',
-        value: '0',
+        value: '',
         pattern: /^[0-9]{1,}[\.,\,]{0,1}[0-9]{1,}$/,
         type: 'число',
     }
 ]);
+
+onBeforeUpdate(() => {
+    const infoArray = formInfo.value;
+    if (props.open && props.productId != -1) {
+        const product = store.getById(props.productId);
+        console.log(product);
+        console.log(infoArray);
+        infoArray[0].value = product.name;
+        infoArray[1].value = product.calories.slice(0, product.calories.indexOf(' к'));
+        infoArray[2].value = product.proteins.slice(0, product.proteins.indexOf(' г'));
+        infoArray[3].value = product.fats.slice(0, product.fats.indexOf(' г'));
+        infoArray[4].value = product.carbs.slice(0, product.carbs.indexOf(' г'));
+    } else {
+        for (let i in infoArray) infoArray[i].value = i == 0 ? '' : '0';
+    }
+});
+
+const title = computed(() => {
+    return props.productId == -1 ? 'Добавить продукт в базу' : 'Редактирование продукта';
+});
+
 
 function close() {
     emit('update:open', false);
 };
 function submit() {
     let data = formInfo.value;
-    store.addCustomProduct({
+    const formData = {
         name: data[0].value,
         calories: data[1].value + ' кКал',
         proteins: data[2].value + ' г',
         fats: data[3].value + ' г',
         carbs: data[4].value + ' г',
-    })
+    }
+    if (props.productId == -1) {
+        store.addCustomProduct(formData);
+    } else {
+        store.editCustomProduct(props.productId, formData);
+    }
     close();
 };
 
@@ -64,7 +95,7 @@ persistent>
     <v-card>
         <template v-slot:title>
         <v-input append-icon="mdi-close"
-        @click:append="close">Добавить продукт в базу</v-input>
+        @click:append="close">{{ title }}</v-input>
         </template>
         <v-row>
         <v-col>

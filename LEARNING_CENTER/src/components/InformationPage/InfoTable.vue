@@ -5,6 +5,7 @@ import { VDataTable } from 'vuetify/lib/labs/components.mjs';
 import DialogAddProduct from './DialogAddProduct.vue'
 const store = useStore();
 const dialog = ref(false);
+const selectProductId = ref(-1);
 const head = [
     {
         title: 'Название',
@@ -34,9 +35,12 @@ const countPage = computed(() => {
 function decPage() {
    if (currentPage.value != 1) currentPage.value--
 };
+function openEditDialog(product) {
+    selectProductId.value = product.id;
+    dialog.value = true;
+}
 function openDialog() {
     dialog.value = true;
-    console.log(dialog.value);
 };
 
 
@@ -52,7 +56,8 @@ function openDialog() {
     >
     <template v-slot:item.actions="{ item }">
         <div v-if="item.raw.custom">
-            <v-icon>mdi-pencil</v-icon>
+            <v-icon
+            @click="openEditDialog(item.raw)">mdi-pencil</v-icon>
             <v-icon 
             @click="store.deleteCustomProduct(item.raw)">
             mdi-delete</v-icon>
@@ -85,7 +90,9 @@ function openDialog() {
     </template>
     </v-data-table>
     <dialog-add-product
-    v-model:open="dialog"/>
+    v-model:open="dialog"
+    @update:open="selectProductId = -1"
+    :product-id="selectProductId"/>
 </template>
 
 <style scoped lang="scss">

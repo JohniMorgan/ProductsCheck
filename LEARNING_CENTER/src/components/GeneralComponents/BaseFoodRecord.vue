@@ -21,7 +21,7 @@ function onDeleteIcon() {
             <v-icon @click="">mdi-pencil</v-icon>
             <v-icon @click="onDeleteIcon">mdi-close</v-icon>
         </template>
-        {{ store.getById(food).name }} - съедено {{ count }} гр.
+        {{ store.getById(food).name }} - {{ count }} гр.
     </v-input>
 </template>
 

@@ -48,6 +48,11 @@ export const useStore = defineStore('main', {
             console.log(this.products[this.products.length-1]);
             this.updateStorage();
         },
+        editCustomProduct(productId, newValue) {
+            const product = this.getById(productId);
+            Object.assign(product, newValue);
+            this.updateStorage();
+        },
         deleteCustomProduct(product) {
             const index = this.products.indexOf(product);
             this.products.splice(index, 1);
