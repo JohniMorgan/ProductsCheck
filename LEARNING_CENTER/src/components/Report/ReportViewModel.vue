@@ -15,9 +15,6 @@ const props = defineProps({
 const themeColors = computed(() => {
     return colors.value.dark ? theme.darkColorSheet : theme.lightColorSheet;
 });
-
-
-
 const chartData = computed(() => {
     return {
         labels: props.labels,
@@ -25,9 +22,7 @@ const chartData = computed(() => {
             {
                 data: props.data,
                 pointRadius: 5,
-                //backgroundColor: colors.value.colors['primary-hover'],
                 backgroundColor: themeColors.value.colors[props.type].point,
-                //borderColor: colors.value.colors.primary
                 borderColor: themeColors.value.colors[props.type].line
             },
         ]
@@ -47,34 +42,19 @@ const chartOptions = computed(() => {
         },
         scales: {
             x:{
-                grid: {
-                    color: colors.value.colors.surface
-                },
-                border: {
-                    display: true,
-                    color: colors.value.colors.text,
-
-                },
+                border: { display: true},
                 title: {
                     display: true,
                     text: "День"
                 }
             },
             y: {
-                grid: {
-                    color: colors.value.colors.surface,
-                },
-                border: {
-                    display: true,
-                    color: colors.value.colors.text,
-
-                },
+                border: { display: true, color: colors.value.colors.text },
+                beginAtZero: true,
             }
         },
-        
     }
 });
-
 </script>
 
 <template>

@@ -18,7 +18,6 @@ function DateToString(date) {
 };
 
 const periodStatistic = computed(() => {
-    console.log("Перерасчёт статистики");
     let day = new Date(firstDate.value);
     let data = {
         calories: [],

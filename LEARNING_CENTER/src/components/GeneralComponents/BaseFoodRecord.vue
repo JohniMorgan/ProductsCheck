@@ -7,18 +7,26 @@ const props = defineProps({
     food: Number,
     count: Number,
 });
-const emit = defineEmits(['delete']);
+const emit = defineEmits(['delete', 'edit']);
 
 function onDeleteIcon() {
     emit('delete')
 };
+
+function onEditIcon(event) {
+    emit('edit', {
+        food: props.food,
+        count: props.count,
+    });
+};
+
 
 </script>
 
 <template>
     <v-input>
         <template v-slot:append>
-            <v-icon @click="">mdi-pencil</v-icon>
+            <v-icon @click="onEditIcon">mdi-pencil</v-icon>
             <v-icon @click="onDeleteIcon">mdi-close</v-icon>
         </template>
         {{ store.getById(food).name }} - {{ count }} гр.

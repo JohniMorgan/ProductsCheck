@@ -9,25 +9,15 @@ export const useDateDB = defineStore('date-db', {
     }),
 
     actions: {
-        /*-------------------------------------
-        Здесь находится блок функций отвечающий
-        за взаимодейтсвие с nowDate
-        --------------------------------------*/
         changeDate(newDate) {
             this.nowDate = newDate;
         },
-        /*-------------------------------------
-        Здесь находится блок функций отвечающий
-        за взаимодейтсвие с массивом 'days'
-        --------------------------------------*/
-        //Добавления дня в базу, если он был выбран впервые
         addNewDay(current_date) {
             const temp = {
                 date: current_date,
                 morning: [],
                 lanch: [],
                 meal: [],
-                total: 0,
             }
             this.days.push(temp);
             this.updateStorage();
@@ -61,14 +51,10 @@ export const useDateDB = defineStore('date-db', {
                 count: Number (count);
             */ 
             let day = this.getDay();
-            console.log(day);
             day[params.time].push({
                 food: params.food,
                 count: params.count
             });
-            const foods = useStore();
-            console.log(foods.getCalories(params.food));
-            day.total += foods.getCalories(params.food) * (params.count / 100);
             this.updateStorage();
         },
         //Удаление продукта из приёма пищи
@@ -80,20 +66,27 @@ export const useDateDB = defineStore('date-db', {
                     //Позиция в массиве
                     index: Number
                 }
-            */
+            */  
            let day = this.getDay();
-           const foods = useStore();
-           let value = foods.getCalories(day[params.time][params.index].food);
-           day.total -= value * (day[params.time])[params.index].count / 100;
            day[params.time].splice(params.index, 1);
-           
            this.updateStorage();
+        },
+        editFood(params) {
+            /*params: {
+                Приём пищи
+                time: {morning/lanc/meal}
+                Позиция в массиве
+                index: Number
+                Новое количество
+                count: Number*/ 
+            let day = this.getDay();
+            day[params.time][params.index].count = params.count;
+            this.updateStorage();
         },
         updateStorage() {
             localStorage.setItem('DaysData', JSON.stringify(this.days));
         },
         init() {
-            console.log(localStorage.getItem('DaysData'));
             const initData = localStorage.getItem('DaysData');
             this.days = initData ? JSON.parse(initData) : [];
         },

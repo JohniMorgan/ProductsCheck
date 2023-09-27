@@ -1,8 +1,9 @@
 <script setup>
-import { defineProps, defineEmits, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useDateDB } from '../../store/date-bd';
 import { useStore } from '../../store/store';
 import BaseFoodRecord from '../GeneralComponents/BaseFoodRecord.vue';
+import DialogEditCard from './DialogEditCard.vue';
 const db = useDateDB();
 const store = useStore();
 
@@ -13,11 +14,14 @@ const props = defineProps({
    color: String,
 });
 const emit = defineEmits(['triggered']);
-
+const selected = ref(null);
+const dialog = ref(false);
+const recordProp = computed(() => {
+    return selectedRecord.value ? selectedRecord.value : undefined;
+});
 const getArray = computed(() => {
    return db.getDay()[props.time];
 });
-
 const sumCalories = computed(() => {
     let sum = 0;
     getArray.value.forEach(element => {
@@ -26,11 +30,13 @@ const sumCalories = computed(() => {
     return sum
 });
 
+const selectedRecord = computed(() => {
+    return getArray.value[selected.value];
+});
 
 function triggered() {
    emit('triggered', {value: props.time})
 };
-
 function onDeletTrigger(index) {
     console.log(index);
     db.deleteFood({
@@ -38,7 +44,17 @@ function onDeletTrigger(index) {
         index: index,
     })
 };
-
+function onEditTrigger(index) {
+    selected.value = index;
+    dialog.value = true;
+};
+function updateCount(event) {
+    db.editFood({
+        time: props.time,
+        index: selected.value,
+        count: event,
+    })
+};
 
 </script>
 
@@ -56,9 +72,10 @@ function onDeletTrigger(index) {
         <v-col cols="8">
             <base-food-record
             v-for="(el, index) in getArray"
-            :key="index"
+            :key="el.food"
             v-bind="el"
-            @delete="onDeletTrigger(index)"/>
+            @delete="onDeletTrigger(index)"
+            @edit="onEditTrigger(index)"/>
         </v-col>
         <v-col cols="2">
             <v-btn
@@ -69,6 +86,13 @@ function onDeletTrigger(index) {
     </v-row>
     </v-container>
 </v-card>
+
+<dialog-edit-card
+:time="time"
+:record="recordProp"
+v-model="dialog"
+@submit="updateCount"/>
+
 </template>
 
 <style scoped lang='scss'>

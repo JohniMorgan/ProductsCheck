@@ -1,10 +1,12 @@
 <script setup>
 import { useTheme } from 'vuetify';
 import { ref } from 'vue';
+
 const position = ref('calculate');
 const theme = useTheme();
 const switchTheme = () => {
-  theme.global.name.value = theme.global.current.value.dark ? 'baseLightTheme' : 'baseDarkTheme';
+    console.log(position.value);
+    theme.global.name.value = theme.global.current.value.dark ? 'baseLightTheme' : 'baseDarkTheme';
 }
 </script>
 
@@ -20,6 +22,10 @@ const switchTheme = () => {
     v-model="position"
     mandatory
     @update:model-value="$router.push(`/${position}`)">
+        <v-btn value="person" stacked>
+            <v-icon>mdi-account</v-icon>
+            Параметры
+        </v-btn>
         <v-btn value="calculate" stacked>
             <v-icon>mdi-calculator-variant</v-icon>
             Дневник

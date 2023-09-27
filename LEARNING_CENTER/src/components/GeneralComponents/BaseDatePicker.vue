@@ -37,6 +37,8 @@ function inOkInput(event) {
       <v-date-picker
         @update:model-value="inOkInput"
         :model-value="date"
+        @click:cancel="menu = false"
+        @click:save="menu = false"
         ok-text="ОК"
         cancel-text="Отмена"
         header="Выберите дату"

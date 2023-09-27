@@ -7,13 +7,7 @@ const store = useStore();
 const dialog = ref(false);
 const selectProductId = ref(-1);
 const head = [
-    {
-        title: 'Название',
-        align: 'start',
-        sortable: false,
-        order: 'asc',
-        key: 'name',
-    },
+    { title: 'Название', align: 'start', sortable: false, order: 'asc', key: 'name'},
     {title: 'Каллории', align:'end', key: 'calories'},
     {title: 'Белки', align: 'end', key: 'proteins'},
     {title: 'Жиры', align: 'end', key: 'fats'},

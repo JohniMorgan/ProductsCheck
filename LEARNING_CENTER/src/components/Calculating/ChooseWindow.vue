@@ -28,12 +28,8 @@ function collectData(event) {
     step.value = 1;
 }
 const totalCalories = computed(() => {
-    return db.dayStatistic(db.currentDayAsString).calories;
-});
-
-onBeforeMount(() => {
-    console.log("before mount")
-    console.log(db.getDay());
+    if (db.getDay())
+        return db.dayStatistic(db.currentDayAsString).calories;
 });
 </script>
 
