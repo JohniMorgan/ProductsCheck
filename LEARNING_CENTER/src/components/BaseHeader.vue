@@ -1,6 +1,9 @@
 <script setup>
 import { useTheme } from 'vuetify';
 import { ref } from 'vue';
+import { usePersonStore } from '../store/person';
+
+const personStore = usePersonStore();
 
 const position = ref('calculate');
 const theme = useTheme();
@@ -22,7 +25,8 @@ const switchTheme = () => {
     v-model="position"
     mandatory
     @update:model-value="$router.push(`/${position}`)">
-        <v-btn value="person" stacked>
+        <v-btn value="person" stacked
+        v-if="personStore.person.name">
             <v-icon>mdi-account</v-icon>
             Параметры
         </v-btn>

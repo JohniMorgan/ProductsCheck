@@ -5,8 +5,10 @@ import BaseCountWindow from './BaseCountWindow.vue';
 import CardMealTime from './CardMealTime.vue';
 import BaseDatePicker from '../GeneralComponents/BaseDatePicker.vue';
 import { useDateDB } from '../../store/date-bd';
+import { usePersonStore } from '../../store/person';
 
 const db = useDateDB();
+const personStore = usePersonStore();
 
 const step = ref(1);
 const choose = ref('');
@@ -48,7 +50,7 @@ const totalCalories = computed(() => {
         </v-col>
         <v-col cols="2">
         <v-progress-circular
-        :model-value="totalCalories/2500 * 100"
+        :model-value="totalCalories/personStore.person.dayCount * 100"
         color="#00FF00"
         :size="70"
         width="7">{{ totalCalories }}</v-progress-circular>

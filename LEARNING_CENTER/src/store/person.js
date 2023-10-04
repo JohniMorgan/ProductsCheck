@@ -13,6 +13,7 @@ export const usePersonStore = defineStore('person', {
             activity: 'none',
             dayCount: 2000,
         },
+
     }),
     actions: {
         init() {
@@ -57,6 +58,27 @@ export const usePersonStore = defineStore('person', {
             console.log(this.person);
             this.calculateDayCalories();
             this.updateStorage();
+        },
+        BDI() {
+            let min_BDI = 20;
+            if (this.person.gender == 'female') min_BDI -= 1;
+            for (let i = 0; i < 6; i++) {
+                if (this.person.age > 24 + 10*i) min_BDI += 1;
+                else break;
+            }
+            let real_BDI = this.person.weight / (this.person.height * this.person.height) * 10000;
+            console.log(min_BDI);
+            console.log(real_BDI);
+            if (real_BDI < min_BDI)
+                return -1
+            if (real_BDI < min_BDI + 5)
+                return 0
+            if (real_BDI < min_BDI + 10)
+                return 1
+            if (real_BDI < min_BDI + 20)
+                return 2
+            if (real_BDI >= min_BDI + 20)
+                return 3
         }
     }
 });
