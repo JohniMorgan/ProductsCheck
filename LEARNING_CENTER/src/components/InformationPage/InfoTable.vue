@@ -2,6 +2,7 @@
 import { useProductStore } from '../../store/product-store';
 import { defineProps, computed, ref } from 'vue';
 import { VDataTable } from 'vuetify/lib/labs/components.mjs';
+import BaseDeleteDialog from '../GeneralComponents/BaseDeleteDialog.vue';
 import DialogAddProduct from './DialogAddProduct.vue'
 const productStore = useProductStore();
 const dialog = ref(false);
@@ -17,6 +18,8 @@ const head = [
 const props = defineProps ({
     keyWord: String
 });
+
+const deleteDialog = ref(false);
 const actualProducts = computed(() => {
     return productStore.products.filter((product) => {
         return product.name.toLowerCase().includes(props.keyWord.toLowerCase());
@@ -37,6 +40,18 @@ function openDialog() {
     dialog.value = true;
 };
 
+const deleteIndex = ref(null);
+
+function deleteReq(index) {
+    deleteIndex.value = index;
+    deleteDialog.value = true;
+};
+
+function applay() {
+    productStore.deleteCustomProduct(deleteIndex.value);
+    deleteIndex.value = null
+};
+
 
 </script>
 
@@ -52,8 +67,9 @@ function openDialog() {
         <div v-if="item.raw.custom">
             <v-icon
             @click="openEditDialog(item.raw)">mdi-pencil</v-icon>
+            <!--productStore.deleteCustomProduct(item.raw)-->
             <v-icon 
-            @click="productStore.deleteCustomProduct(item.raw)">
+            @click="deleteReq(item.raw)">
             mdi-delete</v-icon>
         </div>
         <v-icon v-else>mdi-minus</v-icon>
@@ -63,21 +79,22 @@ function openDialog() {
     -->
     <template v-slot:bottom>
     <v-row>
-        <v-col cols="2">
-        <v-input
-        prepend-icon="mdi-minus"
-        @click:prepend="decPage">
-            <template v-slot:default>
-                <label>{{currentPage}} / {{ countPage }}</label>
-            </template>
-            <template v-slot:append>
-                    <v-icon @click="currentPage++">mdi-plus</v-icon> 
-            </template>
-        </v-input>
+        <v-col>
+        <div class="page-navigation">
+            <v-icon @click="decPage">mdi-minus</v-icon>
+            <label>{{currentPage}} / {{ countPage }}</label>
+            <v-icon @click="currentPage++">mdi-plus</v-icon>
+            <v-spacer/> 
+            <div>
+                <v-icon
+                @click="currentPage = 1">mdi-skip-backward</v-icon>
+                <v-icon 
+                @click="currentPage = countPage"
+                class="ended">mdi-skip-forward</v-icon>
+            </div>
+        </div>
         </v-col>
-        <v-col cols="8">
-        </v-col>
-        <v-col cols="2">
+        <v-col class="ended">
             <v-btn @click="openDialog">Добавить</v-btn>
         </v-col>
     </v-row>
@@ -87,6 +104,11 @@ function openDialog() {
     v-model:open="dialog"
     @update:open="selectProductId = -1"
     :product-id="selectProductId"/>
+
+    <base-delete-dialog
+    v-model:open="deleteDialog"
+    @submit="applay"
+    product/>
 </template>
 
 <style scoped lang="scss">
@@ -102,6 +124,28 @@ function openDialog() {
     }
     .v-col {
         display: flex;
+        justify-content: center;
         justify-items: center;
+        align-items: flex-start;
+        flex-direction: column;
+        > * {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+    }
+    .ended {
+        align-items: flex-end !important;
+        justify-content: flex-end;
+    }
+    .page-navigation {
+        
+        label {
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+        div {
+            display: flex;
+            justify-content:space-between;
+        }
     }
 </style>

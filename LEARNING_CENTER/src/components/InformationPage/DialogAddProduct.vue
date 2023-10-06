@@ -11,6 +11,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:open']);
 const productStore = useProductStore();
+const productForm = ref(null);
 
 const formInfo = ref([
     {
@@ -69,6 +70,15 @@ const title = computed(() => {
 function close() {
     emit('update:open', false);
 };
+
+async function validate() {
+    console.log(productForm.value);
+    const {valid} = await productForm.value.validate();
+
+    if (valid) 
+    submit();
+};
+
 function submit() {
     let data = formInfo.value;
     const formData = {
@@ -97,6 +107,7 @@ persistent>
         <v-input append-icon="mdi-close"
         @click:append="close">{{ title }}</v-input>
         </template>
+    <v-form ref="productForm">
         <v-row>
         <v-col>
             <base-input-slot
@@ -125,8 +136,9 @@ persistent>
                 @change="formInfo[id+2].value = $event.value"/>
             </v-col>
         </v-row>
+    </v-form>
         <v-card-actions>
-            <v-btn @click="submit">Сохранить</v-btn>
+            <v-btn @click="validate">Сохранить</v-btn>
         </v-card-actions>
     </v-card>
 </v-dialog>

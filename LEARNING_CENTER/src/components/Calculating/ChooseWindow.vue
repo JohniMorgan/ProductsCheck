@@ -49,7 +49,7 @@ const totalCalories = computed(() => {
             <label>Всего:</label>
             <v-progress-circular
             :model-value="totalCalories/personStore.person.dayCount * 100"
-            color="#00FF00"
+            color="#00AF00"
             size="70"
             width="7">{{ totalCalories }}</v-progress-circular>
         </v-col>

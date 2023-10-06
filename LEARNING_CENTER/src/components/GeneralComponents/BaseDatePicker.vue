@@ -35,6 +35,7 @@ function inOkInput(event) {
     </template>
     <v-locale-provider locale="ru">
       <v-date-picker
+        width="400"
         @update:model-value="inOkInput"
         :model-value="date"
         @click:cancel="menu = false"
@@ -49,4 +50,10 @@ function inOkInput(event) {
 </template>
 
 <style lang='scss'>
+  .v-date-picker {
+    @media (max-width: 400px) {
+      scale: 0.8;
+      transform: translate(-20px, 5px);
+    }
+  }
 </style>

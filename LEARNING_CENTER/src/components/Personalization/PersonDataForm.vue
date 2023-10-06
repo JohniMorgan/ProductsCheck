@@ -104,6 +104,7 @@ onBeforeUpdate(() => {
 const form = ref(null);
 
 async function validate() {
+    console.log(form.value);
     const {valid} = await form.value.validate();
 
     if (valid) 
@@ -132,6 +133,7 @@ function registrationSubmit() {
 :model-value="open"
 persistent>
     <v-card>
+        <v-row class="end"><v-icon @click="close">mdi-close</v-icon></v-row>
         <v-card-title v-if="mode">Редактирование</v-card-title>
         <v-card-title v-else>Регистрация</v-card-title>
         <v-form ref="form">
@@ -157,8 +159,7 @@ persistent>
             </template>
         </v-select>
         </v-form>
-    <v-row>
-        <v-btn @click="close">Закрыть</v-btn>
+    <v-row class="end">
         <v-btn @click="validate">Сохранить</v-btn>
     </v-row>
     </v-card>
@@ -170,7 +171,7 @@ persistent>
     .v-card {
         max-width: 400px;
         width: 40%;
-        min-width: 300px;
+        min-width: 275px;
     }
     .v-list-item {
         max-width: 300px;
@@ -179,5 +180,18 @@ persistent>
 
     .text-wrap {
         -webkit-line-clamp: unset !important;
+    }
+
+    .end {
+        justify-content: flex-end;
+
+        .v-btn {
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+        .v-icon {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
     }
 </style>

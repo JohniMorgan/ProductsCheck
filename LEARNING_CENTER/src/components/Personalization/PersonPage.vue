@@ -2,8 +2,10 @@
 import { usePersonStore } from '../../store/person';
 import PersonDataForm from './PersonDataForm.vue'
 import { computed, ref } from 'vue';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const personStore = usePersonStore();
+const { name } = useDisplay();
 
 const localeGender = computed(() => {
     return personStore.person.gender == 'male' ? 'Мужской' : 'Женский';
@@ -109,7 +111,11 @@ const openEdit = ref(false);
     <v-row>
         <v-col cols="4">
             <v-btn
-            @click="openEdit = true">Редактировать</v-btn>
+            @click="openEdit = true"
+            :icon="name == 'xs'">
+            <v-icon v-if="name == 'xs'">mdi-pencil</v-icon>
+            {{name == 'xs' ? '' : 'Редактировать'}}
+            </v-btn>
         </v-col>
         <v-col class="content-center">
             <v-input>Ваша текущая норма каллорий

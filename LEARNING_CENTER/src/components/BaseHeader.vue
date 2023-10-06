@@ -8,7 +8,7 @@ const personStore = usePersonStore();
 const position = ref('');
 const route = useRoute();
 const { name } = useDisplay();
-console.log(name.value);
+
 
 watchEffect(() => { //Необходимо соблюсти активность навигации
     if (position.value != route.path.slice(1))
@@ -17,7 +17,7 @@ watchEffect(() => { //Необходимо соблюсти активность
 
 const theme = useTheme();
 const switchTheme = () => {
-    console.log(position.value);
+
     theme.global.name.value = theme.global.current.value.dark ? 'baseLightTheme' : 'baseDarkTheme';
 }
 const appName = computed(() => {
@@ -82,5 +82,11 @@ const isMobile = computed(() => {
         text-align:start;
         font-size: 14px;
         margin-top: -12px;
+    }
+    .v-btn {
+        @media (max-width: 600px) {
+            aspect-ratio: 1;
+            min-width: 25%;
+        }
     }
 </style>

@@ -19,9 +19,8 @@ export const usePersonStore = defineStore('person', {
         init() {
             const initData = localStorage.getItem(ITEM_TAG);
             if (initData) {
-                console.log('Обнаружены данные');
                 this.person = JSON.parse(initData);
-            } else {console.log('Не найдено данных пользователя')}
+            }
         },
         updateStorage() {
             localStorage.setItem(ITEM_TAG, JSON.stringify(this.person));
@@ -55,7 +54,6 @@ export const usePersonStore = defineStore('person', {
         },
         registerPerson(formData) {
             this.person = formData;
-            console.log(this.person);
             this.calculateDayCalories();
             this.updateStorage();
         },
@@ -67,8 +65,6 @@ export const usePersonStore = defineStore('person', {
                 else break;
             }
             let real_BDI = this.person.weight / (this.person.height * this.person.height) * 10000;
-            console.log(min_BDI);
-            console.log(real_BDI);
             if (real_BDI < min_BDI)
                 return -1
             if (real_BDI < min_BDI + 5)

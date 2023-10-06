@@ -5,6 +5,7 @@ import { useProductStore } from '../../store/product-store';
 import BaseFoodRecord from '../GeneralComponents/BaseFoodRecord.vue';
 import DialogEditCard from './DialogEditCard.vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+import BaseDeleteDialog from '../GeneralComponents/BaseDeleteDialog.vue';
 const db = useDateDB();
 const productStore = useProductStore();
 
@@ -19,6 +20,8 @@ const props = defineProps({
 const emit = defineEmits(['triggered']);
 const selected = ref(null);
 const dialog = ref(false);
+const deleteDialog = ref(false);
+const delIndex = ref(null);
 const recordProp = computed(() => {
     return selectedRecord.value ? selectedRecord.value : undefined;
 });
@@ -41,11 +44,9 @@ function triggered() {
    emit('triggered', {value: props.time})
 };
 function onDeletTrigger(index) {
-    console.log(index);
-    db.deleteFood({
-        time: props.time,
-        index: index,
-    })
+    deleteDialog.value = true;
+    delIndex.value = index;
+   
 };
 function onEditTrigger(index) {
     selected.value = index;
@@ -58,6 +59,15 @@ function updateCount(event) {
         count: event,
     })
 };
+
+function submitDelete() {
+    db.deleteFood({
+        time: props.time,
+        index: delIndex.value,
+    })
+
+};
+
 
 </script>
 
@@ -97,7 +107,6 @@ function updateCount(event) {
                         >{{!isOpen ? 'mdi-chevron-down' : 'mdi-chevron-up'}}</v-icon>
                     </div>
                 </template>
-
                 <base-food-record
                 v-for="(el, index) in getArray"
                 :key="el.food"
@@ -115,6 +124,10 @@ function updateCount(event) {
 :record="recordProp"
 v-model="dialog"
 @submit="updateCount"/>
+
+<base-delete-dialog
+v-model:open="deleteDialog"
+@submit="submitDelete"/>
 
 </template>
 

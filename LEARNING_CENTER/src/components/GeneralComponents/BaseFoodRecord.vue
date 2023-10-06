@@ -29,7 +29,8 @@ function onEditIcon() {
             <v-icon @click="onEditIcon">mdi-pencil</v-icon>
             <v-icon @click="onDeleteIcon">mdi-close</v-icon>
         </template>
-        {{ productStore.getById(food).name }} - {{ count }} гр.
+        {{ productStore.getById(food).name }} - {{ count }} гр./
+        {{ productStore.getCalories(food) * count/100}} кКал.
     </v-input>
 </template>
 
