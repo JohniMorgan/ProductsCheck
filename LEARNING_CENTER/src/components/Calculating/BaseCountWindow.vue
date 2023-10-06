@@ -1,14 +1,14 @@
 <script setup>
 import { defineProps, computed, defineEmits, ref } from 'vue';
-import { useStore } from '../../store/store';
-const store = useStore();
+import { useProductStore } from '../../store/product-store';
+const productStore = useProductStore();
 const count = ref(100);
 const props = defineProps({
    selected: Number 
 });
 const emit = defineEmits(['back-step', 'submit']);
 const withoutFirst = computed(() => {
-   return store.headers.slice(1);
+   return productStore.headers.slice(1);
 });
 const withoutName = computed(() => {
    const {id, name, ...newObject} = food.value;
@@ -16,8 +16,8 @@ const withoutName = computed(() => {
    return newObject;
 });
 const food = computed(() => {
-    console.log(store.getById(props.selected));
-   return store.getById(props.selected)
+    console.log(productStore.getById(props.selected));
+   return productStore.getById(props.selected)
 });
 
 

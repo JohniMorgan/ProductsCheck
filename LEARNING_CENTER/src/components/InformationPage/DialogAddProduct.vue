@@ -1,7 +1,7 @@
 <script setup>
 import BaseInputSlot from '../GeneralComponents/BaseInputSlot.vue';
 import { ref, onBeforeUpdate, computed } from 'vue';
-import { useStore } from '../../store/store';
+import { useProductStore } from '../../store/product-store';
 const props = defineProps({
     open: Boolean,
     productId: {
@@ -10,7 +10,7 @@ const props = defineProps({
     }  
 });
 const emit = defineEmits(['update:open']);
-const store = useStore();
+const productStore = useProductStore();
 
 const formInfo = ref([
     {
@@ -48,7 +48,7 @@ const formInfo = ref([
 onBeforeUpdate(() => {
     const infoArray = formInfo.value;
     if (props.open && props.productId != -1) {
-        const product = store.getById(props.productId);
+        const product = productStore.getById(props.productId);
         console.log(product);
         console.log(infoArray);
         infoArray[0].value = product.name;
@@ -79,9 +79,9 @@ function submit() {
         carbs: data[4].value + ' г',
     }
     if (props.productId == -1) {
-        store.addCustomProduct(formData);
+        productStore.addCustomProduct(formData);
     } else {
-        store.editCustomProduct(props.productId, formData);
+        productStore.editCustomProduct(props.productId, formData);
     }
     close();
 };

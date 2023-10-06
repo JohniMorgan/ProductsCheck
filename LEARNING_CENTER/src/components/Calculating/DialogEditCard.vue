@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onBeforeUpdate, computed } from 'vue';
-import { useStore } from '../../store/store'
+import { useProductStore } from '../../store/product-store'
 const props = defineProps({
     time: {
         type: String,
@@ -25,7 +25,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue', 'submit']);
 const inputValue = ref(100);
-const productStore = useStore();
+const productStore = useProductStore();
 
 onBeforeUpdate(() => {
     inputValue.value = props.record.count;

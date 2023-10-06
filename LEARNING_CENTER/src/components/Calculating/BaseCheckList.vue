@@ -1,14 +1,14 @@
 <script setup>
-import { useStore } from '../../store/store';
+import { useProductStore } from '../../store/product-store';
 import { ref, computed, defineEmits } from 'vue';
 import BaseListItem from './BaseListItem.vue';
 import SearchInput from '../InformationPage/SearchInput.vue';
 
-const store = useStore();
+const productStore = useProductStore();
 const msg = ref("");
 const started = ref(false);
 
-const actualProducts = computed(() => store.products.filter(
+const actualProducts = computed(() => productStore.products.filter(
     (product) => {
         return product.name.includes(msg.value);
     }));

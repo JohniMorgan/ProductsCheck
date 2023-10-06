@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 const ITEM_TAG = 'ProductsInfoData';
 
-export const useStore = defineStore('main', {
+export const useProductStore = defineStore('products', {
     state: () => ({
         lastId: 0,
         products: [],

@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, defineEmits, ref } from 'vue';
-import { useStore } from '../../store/store';
-const store = useStore();
+import { useProductStore } from '../../store/product-store';
+const productStore = useProductStore();
 
 const props = defineProps({
     food: Number,
@@ -13,7 +13,7 @@ function onDeleteIcon() {
     emit('delete')
 };
 
-function onEditIcon(event) {
+function onEditIcon() {
     emit('edit', {
         food: props.food,
         count: props.count,
@@ -29,7 +29,7 @@ function onEditIcon(event) {
             <v-icon @click="onEditIcon">mdi-pencil</v-icon>
             <v-icon @click="onDeleteIcon">mdi-close</v-icon>
         </template>
-        {{ store.getById(food).name }} - {{ count }} гр.
+        {{ productStore.getById(food).name }} - {{ count }} гр.
     </v-input>
 </template>
 

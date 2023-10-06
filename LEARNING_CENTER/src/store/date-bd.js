@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { useStore } from './store';
+import { useProductStore } from './product-store';
 
 
 export const useDateDB = defineStore('date-db', {
@@ -98,7 +98,7 @@ export const useDateDB = defineStore('date-db', {
                 fats: 0,
                 carbs: 0,
             };
-            const foods = useStore();
+            const foods = useProductStore();
             for (let part of ['morning', 'lanch', 'meal']) {
                 day[part].forEach(el => {
                     statistic.calories += foods.getCalories(el.food) * (el.count / 100);

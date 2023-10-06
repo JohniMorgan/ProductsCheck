@@ -1,11 +1,11 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useDateDB } from '../../store/date-bd';
-import { useStore } from '../../store/store';
+import { useProductStore } from '../../store/product-store';
 import BaseFoodRecord from '../GeneralComponents/BaseFoodRecord.vue';
 import DialogEditCard from './DialogEditCard.vue';
 const db = useDateDB();
-const store = useStore();
+const productStore = useProductStore();
 
 const props = defineProps({
    time: String,
@@ -25,7 +25,7 @@ const getArray = computed(() => {
 const sumCalories = computed(() => {
     let sum = 0;
     getArray.value.forEach(element => {
-        sum += store.getCalories(element.food) * element.count/100;
+        sum += productStore.getCalories(element.food) * element.count/100;
     });
     return sum
 });

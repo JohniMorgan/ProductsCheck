@@ -2,14 +2,14 @@
 import BaseHeader from './components/BaseHeader.vue';
 import PersonDataForm from './components/Personalization/PersonDataForm.vue';
 import { useDateDB } from './store/date-bd';
-import { useStore } from './store/store';
+import { useProductStore } from './store/product-store';
 import {usePersonStore} from './store/person'
 import { ref } from 'vue';
 
-const store = useStore();
+const productStore = useProductStore();
 const db = useDateDB();
 const person = usePersonStore();
-store.init();
+productStore.init();
 db.init();
 person.init();
 

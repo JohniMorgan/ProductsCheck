@@ -1,9 +1,9 @@
 <script setup>
-import { useStore } from '../../store/store';
+import { useProductStore } from '../../store/product-store';
 import { defineProps, computed, ref } from 'vue';
 import { VDataTable } from 'vuetify/lib/labs/components.mjs';
 import DialogAddProduct from './DialogAddProduct.vue'
-const store = useStore();
+const productStore = useProductStore();
 const dialog = ref(false);
 const selectProductId = ref(-1);
 const head = [
@@ -18,7 +18,7 @@ const props = defineProps ({
     keyWord: String
 });
 const actualProducts = computed(() => {
-    return store.products.filter((product) => {
+    return productStore.products.filter((product) => {
         return product.name.toLowerCase().includes(props.keyWord.toLowerCase());
     })
 });
@@ -53,7 +53,7 @@ function openDialog() {
             <v-icon
             @click="openEditDialog(item.raw)">mdi-pencil</v-icon>
             <v-icon 
-            @click="store.deleteCustomProduct(item.raw)">
+            @click="productStore.deleteCustomProduct(item.raw)">
             mdi-delete</v-icon>
         </div>
         <v-icon v-else>mdi-minus</v-icon>
