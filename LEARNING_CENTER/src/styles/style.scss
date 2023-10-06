@@ -16,16 +16,23 @@ $active-choose-color: rgb(var(--v-theme-active));
     margin-right: auto;
 }
 
+html {
+    font: {
+        family: 'Arial', sans-serif;
+        size: 12px;
+    }
+    @media (min-width: 960px) {
+        font-size: 16px;
+    }
+    line-height: 1.5;
+
+}
+
 .centered {
     @extend %default-centered;
 }
 
 body {
-    font: {
-        family: 'Arial', sans-serif;
-        size: 16px;
-    }
-    line-height: 1.5;
     color: rgb(var(--v-theme-text));
 }
 

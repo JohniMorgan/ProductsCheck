@@ -26,7 +26,7 @@ const emit = defineEmits(['next-step', 'back-step']);
 
 <template> 
 <v-card>
-    <SearchInput
+    <search-input
         :search="msg"
         @change="onInput"
         :append-icon="'mdi-backspace-outline'"
@@ -38,7 +38,7 @@ const emit = defineEmits(['next-step', 'back-step']);
     :items="actualProducts"
     height="200">
     <template v-slot:default="{ item }">
-        <BaseListItem :product="item"
+        <base-list-item :product="item"
         @choose="addToChoosen"/>
     </template>
     </v-virtual-scroll>

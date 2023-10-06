@@ -52,18 +52,18 @@ const periodDataDates = computed(() => {
 
 <template>
 <v-container>
-    <v-row justify="center">
-    <v-col cols="3">
+    <v-row class="bar">
+    <v-col>
         <base-date-picker
         v-model:date="firstDate"/>
     </v-col>
-    <v-col cols="3">
+    <v-col>
         <base-date-picker
         v-model:date="lastDate"/>
     </v-col>
     </v-row>
     <v-row>
-        <v-col cols="6">
+        <v-col>
             <report-view-model
             title="Каллории (кКал)"
             :data="periodStatistic.calories"
@@ -79,7 +79,7 @@ const periodDataDates = computed(() => {
         </v-col>
     </v-row>
     <v-row>
-        <v-col cols="6">
+        <v-col>
             <report-view-model
             title="Жиры (г)"
             :data="periodStatistic.fats"
@@ -102,15 +102,21 @@ const periodDataDates = computed(() => {
 <style scoped lang='scss'>
 
     .v-container {
-        width: 70%;
-        .justify-center {
-            justify-content: center;
-
-            .v-col {
-                display: flex;
-                justify-content: center;
-            }
+        .bar {
+            justify-content: space-between;
         }
+    }
+
+    .v-col {
+        display: flex;
+        justify-content: center;
+        max-height: 300px;
+    }
+
+    .graph {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
 </style>

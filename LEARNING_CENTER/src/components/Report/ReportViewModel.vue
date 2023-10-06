@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import {useTheme} from 'vuetify';
+import {useTheme, useDisplay} from 'vuetify';
 import theme from '../../styles/chart_colorsheet';
+
+const { name } = useDisplay();
 
 const colors = ref(useTheme().current);
 
 const props = defineProps({
     data: Object,
-    labels: Object,
+    labels: {
+        type: Array,
+        required: true,
+    },
     title: String,
     type: String
 });
@@ -17,7 +22,7 @@ const themeColors = computed(() => {
 });
 const chartData = computed(() => {
     return {
-        labels: props.labels,
+        labels:props.labels,
         datasets: [
             {
                 data: props.data,
@@ -31,6 +36,7 @@ const chartData = computed(() => {
 const chartOptions = computed(() => {
     return {
         responsive: true,
+        maintainAspectRatio: true,
         plugins: {
             legend: {
                 display: false,
@@ -44,13 +50,19 @@ const chartOptions = computed(() => {
             x:{
                 border: { display: true},
                 title: {
-                    display: true,
+                    display: name.value != 'xs',
                     text: "День"
+                },
+                ticks: {
+                    display: false,
                 }
             },
             y: {
                 border: { display: true, color: colors.value.colors.text },
                 beginAtZero: true,
+                ticks: {
+                    
+                }
             }
         },
     }
@@ -58,7 +70,7 @@ const chartOptions = computed(() => {
 </script>
 
 <template>
-    <div class="theme-bind">
+    <div class="graphic">
         <Line :data="chartData" :options="chartOptions"/>
     </div>
 </template>
@@ -91,4 +103,8 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+    .graphic {
+        max-height: 300px;
+        aspect-ratio: 2;
+    }
 </style>

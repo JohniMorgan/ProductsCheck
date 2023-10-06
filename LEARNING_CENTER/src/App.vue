@@ -18,10 +18,10 @@ const open = ref(person.person.name == null);
 
 <template>
 <v-layout>
-  <BaseHeader/>
+  <base-header/>
 <v-main>
   <v-container fluid>
-    <RouterView/>
+    <router-view/>
     <person-data-form
     v-model:open="open"/>
   </v-container>

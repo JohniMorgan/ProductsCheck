@@ -1,22 +1,45 @@
 <script setup>
-import { useTheme } from 'vuetify';
-import { ref } from 'vue';
+import { useTheme, useDisplay } from 'vuetify';
+import { ref, watchEffect, computed } from 'vue';
 import { usePersonStore } from '../store/person';
+import { useRoute } from 'vue-router'
 
 const personStore = usePersonStore();
+const position = ref('');
+const route = useRoute();
+const { name } = useDisplay();
+console.log(name.value);
 
-const position = ref('calculate');
+watchEffect(() => { //Необходимо соблюсти активность навигации
+    if (position.value != route.path.slice(1))
+        position.value = route.path.slice(1);
+});
+
 const theme = useTheme();
 const switchTheme = () => {
     console.log(position.value);
     theme.global.name.value = theme.global.current.value.dark ? 'baseLightTheme' : 'baseDarkTheme';
 }
+const appName = computed(() => {
+    switch(name.value) {
+        case 'xs': return '';
+        case 'sm': return 'ЗОЖ - планшет';
+    };
+    return 'ЗОЖ - учёт продуктов';
+});
+
+const isMobile = computed(() => {
+    return name.value == 'xs' |name.value == 'sm';
+});
+
+
+
 </script>
 
 <template>
     <v-app-bar>
     <template v-slot:title>
-        <v-toolbar-title>ЗОЖ - учёт продуктов</v-toolbar-title>
+        <v-toolbar-title>{{ appName }}</v-toolbar-title>
     </template>
     <template v-slot:prepend>
 
@@ -28,19 +51,19 @@ const switchTheme = () => {
         <v-btn value="person" stacked
         v-if="personStore.person.name">
             <v-icon>mdi-account</v-icon>
-            Параметры
+            <span v-if="!isMobile">Параметры</span>
         </v-btn>
         <v-btn value="calculate" stacked>
             <v-icon>mdi-calculator-variant</v-icon>
-            Дневник
+            <span v-if="!isMobile">Дневник</span>
         </v-btn>
         <v-btn value="report" stacked>
             <v-icon>mdi-chart-line</v-icon>
-            Отчёт
+            <span v-if="!isMobile">Отчёт</span>
         </v-btn>
         <v-btn value="info" stacked>
             <v-icon>mdi-food-fork-drink</v-icon>
-            Продукты
+            <span v-if="!isMobile">Продукты</span>
         </v-btn>
     </v-btn-toggle>
         <v-col col="1" sm="1" md="1">
@@ -59,7 +82,5 @@ const switchTheme = () => {
         text-align:start;
         font-size: 14px;
         margin-top: -12px;
-    }
-    .active {
     }
 </style>

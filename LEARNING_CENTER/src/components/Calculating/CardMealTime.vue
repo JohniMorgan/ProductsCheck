@@ -4,8 +4,11 @@ import { useDateDB } from '../../store/date-bd';
 import { useProductStore } from '../../store/product-store';
 import BaseFoodRecord from '../GeneralComponents/BaseFoodRecord.vue';
 import DialogEditCard from './DialogEditCard.vue';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
 const db = useDateDB();
 const productStore = useProductStore();
+
+const { name } = useDisplay();
 
 const props = defineProps({
    time: String,
@@ -62,14 +65,14 @@ function updateCount(event) {
 <v-card>
     <v-container class="mb-6">
     <v-row align-content="center">
-        <v-col cols="2">
+        <v-col  :cols="name != 'xs' ? 2 : 8">
             <v-icon :color="color" size="x-large">{{ icon }}</v-icon>
             <v-input
                 persistent-hint
                 :hint="`Калорий: ${sumCalories}`"
             >{{ title }}</v-input>
         </v-col>
-        <v-col cols="8">
+        <v-col v-if="name != 'xs'">
             <base-food-record
             v-for="(el, index) in getArray"
             :key="el.food"
@@ -77,12 +80,32 @@ function updateCount(event) {
             @delete="onDeletTrigger(index)"
             @edit="onEditTrigger(index)"/>
         </v-col>
-        <v-col cols="2">
+        <v-col :cols="name != 'xs' ? 2 : 4" >
             <v-btn
             icon="mdi-plus"
             color="#02bf28"
             @click="triggered"/>
         </v-col>
+    </v-row>
+    <v-row v-if="name == 'xs' && getArray.length != 0">
+        <v-list>
+            <v-list-group value="openMobile">
+                <template v-slot:activator="{ props, isOpen }">
+                    <div class="center">
+                        <v-icon
+                        v-bind="props"
+                        >{{!isOpen ? 'mdi-chevron-down' : 'mdi-chevron-up'}}</v-icon>
+                    </div>
+                </template>
+
+                <base-food-record
+                v-for="(el, index) in getArray"
+                :key="el.food"
+                v-bind="el"
+                @delete="onDeletTrigger(index)"
+                @edit="onEditTrigger(index)"/>
+            </v-list-group>
+        </v-list>
     </v-row>
     </v-container>
 </v-card>
@@ -103,5 +126,24 @@ v-model="dialog"
         .v-btn {
             align-self:center;
         }
+    }
+    .v-list {
+        width: 100%;
+    }
+
+    .v-list-group {
+        display: flex;
+        flex-direction: column;
+
+        .self-centered {
+            margin-left:50%;
+            align-self: end;
+        }
+    }
+
+    .center {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
 </style>

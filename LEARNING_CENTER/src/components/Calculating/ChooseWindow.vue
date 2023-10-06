@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onBeforeMount } from 'vue'; 
+import { ref, computed } from 'vue'; 
 import BaseCheckList from './BaseCheckList.vue';
 import BaseCountWindow from './BaseCountWindow.vue';
 import CardMealTime from './CardMealTime.vue';
@@ -39,26 +39,24 @@ const totalCalories = computed(() => {
 <v-window v-model="step">
     <v-window-item
     :value="1">
-    <v-row class="bar">
-        <v-col cols="3">
-            <BaseDatePicker
+    <v-row class="bar centered">
+        <v-col>
+            <base-date-picker
             :date="db.nowDate"
             @update:date="db.changeDate($event)"/>
         </v-col>
         <v-col class="justify-self-end">
-            <label>Всего: </label>
-        </v-col>
-        <v-col cols="2">
-        <v-progress-circular
-        :model-value="totalCalories/personStore.person.dayCount * 100"
-        color="#00FF00"
-        :size="70"
-        width="7">{{ totalCalories }}</v-progress-circular>
+            <label>Всего:</label>
+            <v-progress-circular
+            :model-value="totalCalories/personStore.person.dayCount * 100"
+            color="#00FF00"
+            size="70"
+            width="7">{{ totalCalories }}</v-progress-circular>
         </v-col>
     </v-row>
     <v-row>
         <v-col>
-            <CardMealTime
+            <card-meal-time
             title="Завтрак"
             time="morning"
             icon="mdi-weather-sunny"
@@ -68,7 +66,7 @@ const totalCalories = computed(() => {
     </v-row>
     <v-row>
         <v-col>
-            <CardMealTime
+            <card-meal-time
             title="Обед"
             time="lanch"
             icon="mdi-clock-time-one-outline"
@@ -78,7 +76,7 @@ const totalCalories = computed(() => {
     </v-row>
     <v-row>
         <v-col>
-            <CardMealTime
+            <card-meal-time
             title="Ужин"
             time="meal"
             icon="mdi-pasta"
@@ -90,13 +88,13 @@ const totalCalories = computed(() => {
     </v-window-item>
     <v-window-item
     :value="2">
-        <BaseCheckList
+        <base-check-list
         @next-step="goToThirdStep"
         @back-step="step--"/>
     </v-window-item>
     <v-window-item
     :value="3">
-        <BaseCountWindow
+        <base-count-window
         :selected="choose"
         @back-step="step = 2"
         @submit="collectData"/>
@@ -106,11 +104,17 @@ const totalCalories = computed(() => {
 
 <style scoped lang='scss'>
     .v-window {
-        width: 70%;
         margin-left: auto;
         margin-right:auto;
+
+        @media (min-width: 960px) {
+            width: 70%;
+        }
     }
     .bar {
+        min-height: 50px;
+        max-width: 800px;
+        justify-self: center;
         .v-col {
             display: flex;
             align-items: center;
@@ -118,6 +122,11 @@ const totalCalories = computed(() => {
             &.justify-self-end {
                 justify-content: end;
             }
+
+            label {
+                padding-right: 10px;
+            }
         }
     }
+
 </style>
