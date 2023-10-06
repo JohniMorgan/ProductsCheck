@@ -1,6 +1,6 @@
 <script setup>
 import BaseHeader from './components/BaseHeader.vue';
-import PersonRegistrationForm from './components/Personalization/PersonRegistrationForm.vue';
+import PersonDataForm from './components/Personalization/PersonDataForm.vue';
 import { useDateDB } from './store/date-bd';
 import { useStore } from './store/store';
 import {usePersonStore} from './store/person'
@@ -22,7 +22,7 @@ const open = ref(person.person.name == null);
 <v-main>
   <v-container fluid>
     <RouterView/>
-    <person-registration-form
+    <person-data-form
     v-model:open="open"/>
   </v-container>
 </v-main>

@@ -1,7 +1,9 @@
 <script setup>
 import BaseInputSlot from '../GeneralComponents/BaseInputSlot.vue';
-import { ref } from 'vue';
+import { ref, onBeforeUpdate } from 'vue';
 import { usePersonStore } from '../../store/person';
+
+const mode = ref(null);
 
 const props = defineProps({
     open: {
@@ -16,8 +18,8 @@ const props = defineProps({
                 age: 0,
                 height: 0,
                 weight: 0,
-                gender: null,
-                activity: null,
+                gender: 'male',
+                activity: 'min',
             }
         }
     }
@@ -87,12 +89,25 @@ const formSelectInfo = ref([
 
 const selectedItem = ref('min');
 
+onBeforeUpdate(() => {
+    mode.value = props.person.name ? true : false //0-registration;1-edit
+    formFieldsInfo.value[0].value = mode.value ? props.person.name : '';
+    formFieldsInfo.value[1].value = mode.value ? props.person.height : '';
+    formFieldsInfo.value[2].value = mode.value ? props.person.weight : '';
+    formFieldsInfo.value[3].value = mode.value ? props.person.age : '';
+
+    formRadio.value = props.person.gender;
+
+    selectedItem.value = props.person.activity;
+});
+
 const form = ref(null);
 
 async function validate() {
     const {valid} = await form.value.validate();
 
-    if (valid) registrationSubmit();
+    if (valid) 
+    registrationSubmit();
 };
 
 function registrationSubmit() {
@@ -110,7 +125,6 @@ function registrationSubmit() {
     close();
 };
 
-
 </script>
 
 <template>
@@ -118,7 +132,8 @@ function registrationSubmit() {
 :model-value="open"
 persistent>
     <v-card>
-        <v-card-title>Регистрация</v-card-title>
+        <v-card-title v-if="mode">Редактирование</v-card-title>
+        <v-card-title v-else>Регистрация</v-card-title>
         <v-form ref="form">
         <base-input-slot v-for="field in formFieldsInfo"
             :value="field.value"
@@ -142,10 +157,10 @@ persistent>
             </template>
         </v-select>
         </v-form>
-    <v-card-action>
+    <v-row>
         <v-btn @click="close">Закрыть</v-btn>
-        <v-btn @click="validate">Chek-In</v-btn>
-    </v-card-action>
+        <v-btn @click="validate">Сохранить</v-btn>
+    </v-row>
     </v-card>
 </v-dialog>
 

@@ -1,6 +1,7 @@
 <script setup>
 import { usePersonStore } from '../../store/person';
-import { computed } from 'vue';
+import PersonDataForm from './PersonDataForm.vue'
+import { computed, ref } from 'vue';
 
 const personStore = usePersonStore();
 
@@ -52,60 +53,108 @@ const titleBDI = computed(() => {
     return title;
 });
 
-const colorBDI = computed(() => {
-    let color = '#';
+const colorBDIclass = computed(() => {
+    let color = 'text-';
     switch(personStore.BDI()) {
         case -1:
-            color += '1108bf';
+            color += 'low';
             break;
         case 0:
-            color += '00ff00';
+            color += 'normal';
             break;
         case 1:
-            color += 'e67700';
+            color += 'higher';
             break;
         case 2:
-            color += 'b30000';
+            color += 'warn';
             break;
         case 3:
-            color += '6e0303';
+            color += 'danger';
             break;
     }
     return color
 });
 
+const openEdit = ref(false);
 
 </script>
 
 <template>
     <v-card>
     <v-row>
-    <v-col>
+    <v-col cols="4">
         <v-input>{{ personStore.person.name }}</v-input>
         <v-input>Возраст: {{ personStore.person.age }}</v-input>
         <v-input>Рост: {{ personStore.person.height }}</v-input>
         <v-input>Пол: {{ localeGender }}</v-input>
         <v-input>Активность: {{ activityLocale }}</v-input>
     </v-col>
-    <v-col>
-        <v-input>Ваш вес:</v-input>
+    <v-col cols="8" class="content-center">
+        
+        <v-input>Ваш вес</v-input>
+        
         <v-progress-circular
+        :class="colorBDIclass"
         model-value="100"
-        :color="colorBDI"
-        size="70">
+        size="100">
             {{ personStore.person.weight }}
         </v-progress-circular>
-        <v-input>{{ titleBDI }}</v-input>
-        <v-input>Ваша текущая норма каллорий
-             для поддержания веса: {{ personStore.person.dayCount }}</v-input>
+        <v-spacer/>
+        <span :class="colorBDIclass">
+            {{ titleBDI }}</span>
+        <v-spacer/>
+        
     </v-col>
     </v-row>
-        <v-btn>Редактировать</v-btn>
+    <v-row>
+        <v-col cols="4">
+            <v-btn
+            @click="openEdit = true">Редактировать</v-btn>
+        </v-col>
+        <v-col class="content-center">
+            <v-input>Ваша текущая норма каллорий
+                для поддержания веса: {{ personStore.person.dayCount }}</v-input>
+        </v-col>
+        </v-row>
     </v-card>
+
+    <!--Диалог редактирования данных-->
+    <person-data-form
+    v-model:open="openEdit"
+    v-bind:person="personStore.person"/>
 </template>
 
 <style scoped lang='scss'>
     .card {
         width: 70%
+    }
+    .v-col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-center {
+        align-items: center;
+    }
+    .v-progress-circular {
+        font-size: 32px;
+    }
+
+    .text {
+        &-low {
+            color: #1168ff
+        }
+        &-normal {
+            color: #00af00;
+        }
+        &-higher {
+            color: #aba61a
+        }
+        &-warn {
+            color: #f27d00
+        }
+        &-danger {
+            color: #b20000
+        }
     }
 </style>
