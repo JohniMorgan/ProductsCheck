@@ -55,7 +55,7 @@ const formFieldsInfo = ref([
 const formRadio = ref('male');
 
 function close() {
-    console.log('close');
+     
     emit('update:open', false);
 };
 
@@ -104,7 +104,7 @@ onBeforeUpdate(() => {
 const form = ref(null);
 
 async function validate() {
-    console.log(form.value);
+     
     const {valid} = await form.value.validate();
 
     if (valid) 

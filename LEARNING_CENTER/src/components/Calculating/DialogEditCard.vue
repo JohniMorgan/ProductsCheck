@@ -37,7 +37,7 @@ const selectedProduct = computed(() => {
 
 
 function submit() {
-    console.log('submited');
+     
     emit('submit', Number(inputValue.value));
     emit('update:modelValue', false);
 };

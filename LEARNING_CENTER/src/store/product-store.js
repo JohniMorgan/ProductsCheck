@@ -45,7 +45,7 @@ export const useProductStore = defineStore('products', {
         addCustomProduct(product) {
             this.products.push({...product, id: this.lastId + 1, custom: true});
             this.lastId += 1;
-            console.log(this.products[this.products.length-1]);
+             
             this.updateStorage();
         },
         editCustomProduct(productId, newValue) {

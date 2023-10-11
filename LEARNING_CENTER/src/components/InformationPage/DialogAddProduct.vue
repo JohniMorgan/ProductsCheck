@@ -50,8 +50,8 @@ onBeforeUpdate(() => {
     const infoArray = formInfo.value;
     if (props.open && props.productId != -1) {
         const product = productStore.getById(props.productId);
-        console.log(product);
-        console.log(infoArray);
+         
+         
         infoArray[0].value = product.name;
         infoArray[1].value = product.calories.slice(0, product.calories.indexOf(' к'));
         infoArray[2].value = product.proteins.slice(0, product.proteins.indexOf(' г'));
@@ -72,7 +72,7 @@ function close() {
 };
 
 async function validate() {
-    console.log(productForm.value);
+     
     const {valid} = await productForm.value.validate();
 
     if (valid) 

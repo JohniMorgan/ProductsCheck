@@ -12,11 +12,11 @@ const withoutFirst = computed(() => {
 });
 const withoutName = computed(() => {
    const {id, name, ...newObject} = food.value;
-   console.log(newObject);
+    
    return newObject;
 });
 const food = computed(() => {
-    console.log(productStore.getById(props.selected));
+     
    return productStore.getById(props.selected)
 });
 
