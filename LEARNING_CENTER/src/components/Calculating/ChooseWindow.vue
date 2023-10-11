@@ -33,6 +33,34 @@ const totalCalories = computed(() => {
     if (db.getDay())
         return db.dayStatistic(db.currentDayAsString).calories;
 });
+
+const countInformation = computed(() => {
+    const needCalories = personStore.person.dayCount;
+    if (totalCalories.value < needCalories - 400) 
+        return "Недостаточно для поддержания веса";
+    if (totalCalories.value < needCalories - 50)
+        return "Достаточно для плавного снижения веса";
+    if (totalCalories.value < needCalories + 50)
+        return "Достаточно для поддержания веса";
+    if (totalCalories.value < needCalories + 400)
+        return "Слабое превышение дневной нормы";
+    return "Сильное превышение дневной нормы";
+});
+
+const colorStyle = computed(() => {
+    const needCalories = personStore.person.dayCount;
+    if (totalCalories.value < needCalories - 400) 
+        return "color-low";
+    if (totalCalories.value < needCalories - 50)
+        return "color-normal";
+    if (totalCalories.value < needCalories + 50)
+        return "color-normal";
+    if (totalCalories.value < needCalories + 400)
+        return "color-warn";
+    return "color-danger";
+});
+
+
 </script>
 
 <template>
@@ -40,16 +68,19 @@ const totalCalories = computed(() => {
     <v-window-item
     :value="1">
     <v-row class="bar centered">
-        <v-col>
+        <v-col cols="3">
             <base-date-picker
             :date="db.nowDate"
             @update:date="db.changeDate($event)"/>
         </v-col>
-        <v-col class="justify-self-end">
+        <v-col :class="colorStyle">
+            <label>{{ countInformation }}</label>
+        </v-col>
+        <v-col class="justify-self-end" cols="3">
             <label>Всего:</label>
             <v-progress-circular
+            :class="colorStyle"
             :model-value="totalCalories/personStore.person.dayCount * 100"
-            color="#00AF00"
             size="70"
             width="7">{{ totalCalories }}</v-progress-circular>
         </v-col>
@@ -126,6 +157,21 @@ const totalCalories = computed(() => {
             label {
                 padding-right: 10px;
             }
+        }
+    }
+
+    .color {
+        &-low {
+            color: #1168ff
+        }
+        &-normal {
+            color: #00af00;
+        }
+        &-warn {
+            color: #f27d00
+        }
+        &-danger {
+            color: #b20000
         }
     }
 
