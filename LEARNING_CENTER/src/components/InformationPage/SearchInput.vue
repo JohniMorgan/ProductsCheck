@@ -11,17 +11,13 @@ function onInput(event) {
 
 <template>
     <v-text-field
-    :value="search"
-    label="Поиск по названию" 
-    prepend-icon="mdi-magnify"
-    variant="underlined"
-    height="40px"
-    @input="onInput"
-    @focus="emit('focused')"
-    @blur="emit('unfocused')">
-    </v-text-field>
+        :value="search"
+        label="Поиск по названию" 
+        prepend-icon="mdi-magnify"
+        variant="underlined"
+        height="40px"
+        @input="onInput"
+        @focus="emit('focused')"
+        @blur="emit('unfocused')"
+    />
 </template>
-
-<style scoped lang="scss">
-
-</style>

@@ -100,40 +100,48 @@ function submit() {
 
 <template>
 <v-dialog
-:model-value="open"
-persistent>
+    :model-value="open"
+    persistent
+>
     <v-card>
-        <template v-slot:title>
-        <v-input append-icon="mdi-close"
-        @click:append="close">{{ title }}</v-input>
+        <template #title>
+            <v-input 
+                append-icon="mdi-close"
+                @click:append="close"
+            >
+                {{ title }}
+            </v-input>
         </template>
     <v-form ref="productForm">
         <v-row>
-        <v-col>
-            <base-input-slot
-            v-model="formInfo[0].value"
-            :name="formInfo[0].title"
-            :pattern="formInfo[0].type"
-            :test="formInfo[0].pattern"
-            @change="formInfo[0].value = $event.value"/>
-        </v-col>
+            <v-col>
+                <base-input-slot
+                    v-model="formInfo[0].value"
+                    :name="formInfo[0].title"
+                    :pattern="formInfo[0].type"
+                    :test="formInfo[0].pattern"
+                    @change="formInfo[0].value = $event.value"
+                />
+            </v-col>
         </v-row>
         <v-row v-for="id in 2">
             <v-col cols="6">
                 <base-input-slot
-                :value="formInfo[id].value"
-                :name="formInfo[id].title"
-                :pattern="formInfo[id].type"
-                :test="formInfo[id].pattern"
-                @change="formInfo[id].value = $event.value"/>
+                    :value="formInfo[id].value"
+                    :name="formInfo[id].title"
+                    :pattern="formInfo[id].type"
+                    :test="formInfo[id].pattern"
+                    @change="formInfo[id].value = $event.value"
+                />
             </v-col>
             <v-col cols="6">
                 <base-input-slot
-                :value="formInfo[id+2].value"
-                :name="formInfo[id+2].title"
-                :pattern="formInfo[id+2].type"
-                :test="formInfo[id+2].pattern"
-                @change="formInfo[id+2].value = $event.value"/>
+                    :value="formInfo[id+2].value"
+                    :name="formInfo[id+2].title"
+                    :pattern="formInfo[id+2].type"
+                    :test="formInfo[id+2].pattern"
+                    @change="formInfo[id+2].value = $event.value"
+                />
             </v-col>
         </v-row>
     </v-form>
@@ -143,7 +151,3 @@ persistent>
     </v-card>
 </v-dialog>
 </template>
-
-<style scoped lang='scss'>
-
-</style>

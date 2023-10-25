@@ -25,7 +25,7 @@ function onEditIcon() {
 
 <template>
     <v-input>
-        <template v-slot:append>
+        <template #append>
             <v-icon @click="onEditIcon">mdi-pencil</v-icon>
             <v-icon @click="onDeleteIcon">mdi-close</v-icon>
         </template>
@@ -33,7 +33,3 @@ function onEditIcon() {
         {{ productStore.getCalories(food) * count/100}} кКал.
     </v-input>
 </template>
-
-<style scoped lang='scss'>
-
-</style>

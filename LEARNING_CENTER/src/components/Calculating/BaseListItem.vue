@@ -18,7 +18,3 @@ function onChoose() {
         <v-list-item-title>{{ product.name }}</v-list-item-title>
     </v-list-item>
 </template>
-
-<style scoped lang='scss'>
-
-</style>

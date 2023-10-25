@@ -28,7 +28,3 @@ const open = ref(person.person.name == null);
 </v-main>
 </v-layout>
 </template>
-
-<style lang="scss">
-
-</style>

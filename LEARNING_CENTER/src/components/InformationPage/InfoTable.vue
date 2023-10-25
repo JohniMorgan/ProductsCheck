@@ -57,27 +57,27 @@ function applay() {
 
 <template>
     <v-data-table
-    v-model:page="currentPage"
-    :items="actualProducts"
-    :headers="head"
-    items-per-page="7"
-    hide-default-footer
+        v-model:page="currentPage"
+        :items="actualProducts"
+        :headers="head"
+        items-per-page="7"
+        hide-default-footer
     >
-    <template v-slot:item.actions="{ item }">
+    <template #item.actions="{ item }">
         <div v-if="item.raw.custom">
-            <v-icon
-            @click="openEditDialog(item.raw)">mdi-pencil</v-icon>
-            <!--productStore.deleteCustomProduct(item.raw)-->
-            <v-icon 
-            @click="deleteReq(item.raw)">
-            mdi-delete</v-icon>
+            <v-icon @click="openEditDialog(item.raw)">
+                mdi-pencil
+            </v-icon>
+            <v-icon @click="deleteReq(item.raw)">
+                mdi-delete
+            </v-icon>
         </div>
         <v-icon v-else>mdi-minus</v-icon>
     </template>
     <!--
     Нижняя часть таблицы, тулбар
     -->
-    <template v-slot:bottom>
+    <template #bottom>
     <v-row>
         <v-col>
         <div class="page-navigation">
@@ -86,11 +86,12 @@ function applay() {
             <v-icon @click="currentPage++">mdi-plus</v-icon>
             <v-spacer/> 
             <div>
-                <v-icon
-                @click="currentPage = 1">mdi-skip-backward</v-icon>
-                <v-icon 
-                @click="currentPage = countPage"
-                class="ended">mdi-skip-forward</v-icon>
+                <v-icon @click="currentPage = 1">
+                    mdi-skip-backward
+                </v-icon>
+                <v-icon @click="currentPage = countPage" class="ended">
+                    mdi-skip-forward
+                </v-icon>
             </div>
         </div>
         </v-col>
@@ -101,14 +102,15 @@ function applay() {
     </template>
     </v-data-table>
     <dialog-add-product
-    v-model:open="dialog"
-    @update:open="selectProductId = -1"
-    :product-id="selectProductId"/>
-
+        v-model:open="dialog"
+        @update:open="selectProductId = -1"
+        :product-id="selectProductId"
+    />
     <base-delete-dialog
-    v-model:open="deleteDialog"
-    @submit="applay"
-    product/>
+        v-model:open="deleteDialog"
+        @submit="applay"
+        product
+    />
 </template>
 
 <style scoped lang="scss">

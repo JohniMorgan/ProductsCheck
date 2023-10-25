@@ -25,13 +25,9 @@ function onInput(event) {
 
 <template>
     <v-text-field
-    :label="name"
-    :rules="rules"
-    :model-value="value"
-    @input="onInput">
-    </v-text-field>
+        :label="name"
+        :rules="rules"
+        :model-value="value"
+        @input="onInput"
+    />
 </template>
-
-<style scoped lang='scss'>
-
-</style>

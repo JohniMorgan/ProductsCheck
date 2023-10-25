@@ -130,34 +130,45 @@ function registrationSubmit() {
 
 <template>
 <v-dialog
-:model-value="open"
-persistent>
+    :model-value="open"
+    persistent
+>
     <v-card>
         <v-row class="end"><v-icon @click="close">mdi-close</v-icon></v-row>
         <v-card-title v-if="mode">Редактирование</v-card-title>
         <v-card-title v-else>Регистрация</v-card-title>
         <v-form ref="form">
-        <base-input-slot v-for="field in formFieldsInfo"
-            :value="field.value"
-            :name="field.title"
-            :pattern="field.type"
-            :test="field.pattern"
-            @change="field.value = $event.value"/>
-        <v-radio-group
-            label="Пол"
-            v-model="formRadio"
-            inline>
-            <v-radio value="male" label="Мужской"></v-radio>
-            <v-radio value="female" label="Женский"></v-radio>
-        </v-radio-group>
-        <v-select :items="formSelectInfo"
-        v-model="selectedItem">
-            <template v-slot:item="{props, item}">
-                <v-list-item v-bind="props" :title="item.raw.title">
-                    <v-list-item-subtitle class="text-wrap">{{ item.raw.subtitle }}</v-list-item-subtitle>
-                </v-list-item>
-            </template>
-        </v-select>
+            <base-input-slot v-for="field in formFieldsInfo"
+                :value="field.value"
+                :name="field.title"
+                :pattern="field.type"
+                :test="field.pattern"
+                @change="field.value = $event.value"
+            />
+            <v-radio-group
+                label="Пол"
+                v-model="formRadio"
+                inline
+            >
+                <v-radio 
+                    value="male"
+                    label="Мужской"
+                />
+                <v-radio
+                    value="female"
+                    label="Женский"
+                />
+            </v-radio-group>
+            <v-select 
+                :items="formSelectInfo"
+                v-model="selectedItem"
+            >
+                <template #item="{props, item}">
+                    <v-list-item v-bind="props" :title="item.raw.title">
+                        <v-list-item-subtitle class="text-wrap">{{ item.raw.subtitle }}</v-list-item-subtitle>
+                    </v-list-item>
+                </template>
+            </v-select>
         </v-form>
     <v-row class="end">
         <v-btn @click="validate">Сохранить</v-btn>

@@ -25,8 +25,9 @@ function close() {
 
 <template>
 <v-dialog
-:model-value="open"
-persistent>
+    :model-value="open"
+    persistent
+>
     <v-card>
         <v-row><v-icon @click="close">mdi-close</v-icon></v-row>
         <v-card-title>Удалить?</v-card-title>

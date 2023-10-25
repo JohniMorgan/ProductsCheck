@@ -7,7 +7,7 @@ import { useRoute } from 'vue-router'
 const personStore = usePersonStore();
 const position = ref('');
 const route = useRoute();
-const { name } = useDisplay();
+const { name : displayName } = useDisplay();
 
 
 watchEffect(() => { //Необходимо соблюсти активность навигации
@@ -21,53 +21,66 @@ const switchTheme = () => {
     theme.global.name.value = theme.global.current.value.dark ? 'baseLightTheme' : 'baseDarkTheme';
 }
 const appName = computed(() => {
-    switch(name.value) {
+    switch(displayName.value) {
         case 'xs': return '';
         case 'sm': return 'ЗОЖ - планшет';
     };
     return 'ЗОЖ - учёт продуктов';
 });
-
-const isMobile = computed(() => {
-    return name.value == 'xs' |name.value == 'sm';
-});
-
-
-
 </script>
 
 <template>
     <v-app-bar>
-    <template v-slot:title>
+    <template #title>
         <v-toolbar-title>{{ appName }}</v-toolbar-title>
     </template>
-    <template v-slot:prepend>
+    <template #prepend>
 
     </template>
     <v-btn-toggle
-    v-model="position"
-    mandatory
-    @update:model-value="$router.push(`/${position}`)">
-        <v-btn value="person" stacked
-        v-if="personStore.person.name">
+        v-model="position"
+        mandatory
+        @update:model-value="$router.push(`/${position}`)"
+    >
+        <v-btn
+            value="person" 
+            stacked
+            v-if="personStore.person.name"
+        >
             <v-icon>mdi-account</v-icon>
-            <span v-if="!isMobile">Параметры</span>
+            <span class="show-no-mobile">Параметры</span>
         </v-btn>
-        <v-btn value="calculate" stacked>
+        <v-btn
+            value="calculate"
+            stacked
+        >
             <v-icon>mdi-calculator-variant</v-icon>
-            <span v-if="!isMobile">Дневник</span>
+            <span class="show-no-mobile">Дневник</span>
         </v-btn>
-        <v-btn value="report" stacked>
+        <v-btn
+            value="report"
+            stacked
+        >
             <v-icon>mdi-chart-line</v-icon>
-            <span v-if="!isMobile">Отчёт</span>
+            <span class="show-no-mobile">Отчёт</span>
         </v-btn>
-        <v-btn value="info" stacked>
+        <v-btn
+            value="info"
+            stacked
+        >
             <v-icon>mdi-food-fork-drink</v-icon>
-            <span v-if="!isMobile">Продукты</span>
+            <span class="show-no-mobile">Продукты</span>
         </v-btn>
     </v-btn-toggle>
-        <v-col col="1" sm="1" md="1">
-            <v-switch @click="switchTheme" hide-details></v-switch>
+        <v-col
+            col="1"
+            sm="1"
+            md="1"
+        >
+            <v-switch
+                @click="switchTheme"
+                hide-details
+            />
             <span class="switch-label">Тема</span>
         </v-col>
     </v-app-bar>
@@ -87,6 +100,12 @@ const isMobile = computed(() => {
         @media (max-width: 600px) {
             aspect-ratio: 1;
             min-width: 25%;
+        }
+    }
+
+    .show-no-mobile {
+        @media (max-width: 960px) {
+            display: none;
         }
     }
 </style>

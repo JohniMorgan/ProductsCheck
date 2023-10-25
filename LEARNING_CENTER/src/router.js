@@ -12,7 +12,7 @@ const routes = [
     },
     {
         path: '/calculate',
-        name: "calculate",
+        name: 'calculate',
         component: ChooseWindow
     },
     {

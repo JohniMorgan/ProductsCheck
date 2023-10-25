@@ -5,7 +5,7 @@ import { computed, ref } from 'vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const personStore = usePersonStore();
-const { name } = useDisplay();
+const { name : displayName } = useDisplay();
 
 const localeGender = computed(() => {
     return personStore.person.gender == 'male' ? 'Мужской' : 'Женский';
@@ -82,52 +82,56 @@ const openEdit = ref(false);
 </script>
 
 <template>
-    <v-card>
+<v-card>
     <v-row>
-    <v-col cols="4">
-        <v-input>{{ personStore.person.name }}</v-input>
-        <v-input>Возраст: {{ personStore.person.age }}</v-input>
-        <v-input>Рост: {{ personStore.person.height }}</v-input>
-        <v-input>Пол: {{ localeGender }}</v-input>
-        <v-input>Активность: {{ activityLocale }}</v-input>
-    </v-col>
-    <v-col cols="8" class="content-center">
-        
-        <v-input>Ваш вес</v-input>
-        
-        <v-progress-circular
-        :class="colorBDIclass"
-        model-value="100"
-        size="100">
-            {{ personStore.person.weight }}
-        </v-progress-circular>
-        <v-spacer/>
-        <span :class="colorBDIclass">
-            {{ titleBDI }}</span>
-        <v-spacer/>
-        
-    </v-col>
+        <v-col cols="4">
+            <v-input>{{ personStore.person.name }}</v-input>
+            <v-input>Возраст: {{ personStore.person.age }}</v-input>
+            <v-input>Рост: {{ personStore.person.height }}</v-input>
+            <v-input>Пол: {{ localeGender }}</v-input>
+            <v-input>Активность: {{ activityLocale }}</v-input>
+        </v-col>
+        <v-col 
+            cols="8"
+            class="content-center"
+        >
+            <v-input>Ваш вес</v-input>   
+            <v-progress-circular
+                :class="colorBDIclass"
+                model-value="100"
+                size="100"
+            >
+                {{ personStore.person.weight }}
+            </v-progress-circular>
+            <v-spacer/>
+                <span :class="colorBDIclass">
+                    {{ titleBDI }}
+                </span>
+            <v-spacer/>
+        </v-col>
     </v-row>
     <v-row>
         <v-col cols="4">
             <v-btn
-            @click="openEdit = true"
-            :icon="name == 'xs'">
-            <v-icon v-if="name == 'xs'">mdi-pencil</v-icon>
-            {{name == 'xs' ? '' : 'Редактировать'}}
+                @click="openEdit = true"
+                :icon="displayName == 'xs'"
+            >
+                <v-icon v-if="displayName == 'xs'">mdi-pencil</v-icon>
+                {{displayName == 'xs' ? '' : 'Редактировать'}}
             </v-btn>
         </v-col>
         <v-col class="content-center">
             <v-input>Ваша текущая норма каллорий
                 для поддержания веса: {{ personStore.person.dayCount }}</v-input>
         </v-col>
-        </v-row>
-    </v-card>
+    </v-row>
+</v-card>
 
     <!--Диалог редактирования данных-->
     <person-data-form
-    v-model:open="openEdit"
-    v-bind:person="personStore.person"/>
+        v-model:open="openEdit"
+        :person="personStore.person"
+    />
 </template>
 
 <style scoped lang='scss'>

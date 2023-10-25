@@ -36,8 +36,7 @@ const selectedProduct = computed(() => {
 });
 
 
-function submit() {
-     
+function submit() {  
     emit('submit', Number(inputValue.value));
     emit('update:modelValue', false);
 };
@@ -50,18 +49,22 @@ function close() {
 </script>
 
 <template>
-<v-dialog
-:model-value="modelValue">
+<v-dialog :model-value="modelValue">
     <v-card>
-        <template v-slot:title>
-            <v-input append-icon="mdi-close"
-            @click:append="close">Редактирование приёма пищи</v-input>
+        <template #title>
+            <v-input 
+                append-icon="mdi-close"
+                @click:append="close"
+            >
+                Редактирование приёма пищи
+            </v-input>
         </template>
         <v-row>
             <v-col>
                 <v-text-field
-                label="Количество"
-                v-model="inputValue"></v-text-field>
+                    label="Количество"
+                    v-model="inputValue"
+                />
             </v-col>
         </v-row>
         <v-row>
@@ -91,7 +94,3 @@ function close() {
     </v-card>
 </v-dialog>
 </template>
-
-<style scoped lang='scss'>
-
-</style>

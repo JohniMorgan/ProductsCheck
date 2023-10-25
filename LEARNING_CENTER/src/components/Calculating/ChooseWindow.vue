@@ -65,70 +65,75 @@ const colorStyle = computed(() => {
 
 <template>
 <v-window v-model="step">
-    <v-window-item
-    :value="1">
-    <v-row class="bar centered">
-        <v-col cols="3">
-            <base-date-picker
-            :date="db.nowDate"
-            @update:date="db.changeDate($event)"/>
-        </v-col>
-        <v-col :class="colorStyle">
-            <label>{{ countInformation }}</label>
-        </v-col>
-        <v-col class="justify-self-end" cols="3">
-            <label>Всего:</label>
-            <v-progress-circular
-            :class="colorStyle"
-            :model-value="totalCalories/personStore.person.dayCount * 100"
-            size="70"
-            width="7">{{ totalCalories }}</v-progress-circular>
-        </v-col>
-    </v-row>
-    <v-row>
-        <v-col>
-            <card-meal-time
-            title="Завтрак"
-            time="morning"
-            icon="mdi-weather-sunny"
-            :color="'#d5e000'"
-            @triggered="goToSecondStep"/>
-        </v-col>
-    </v-row>
-    <v-row>
-        <v-col>
-            <card-meal-time
-            title="Обед"
-            time="lanch"
-            icon="mdi-clock-time-one-outline"
-            :color="'#ff8a0d'"
-            @triggered="goToSecondStep"/>
-        </v-col>
-    </v-row>
-    <v-row>
-        <v-col>
-            <card-meal-time
-            title="Ужин"
-            time="meal"
-            icon="mdi-pasta"
-            :color="'#bb04c2'"
-            @triggered="goToSecondStep"/>
-        </v-col>
-    </v-row>
-        
+    <v-window-item :value="1">
+        <v-row class="bar centered">
+            <v-col cols="3">
+                <base-date-picker
+                    :date="db.nowDate"
+                    @update:date="db.changeDate($event)"
+                />
+            </v-col>
+            <v-col :class="colorStyle">
+                <label>{{ countInformation }}</label>
+            </v-col>
+            <v-col class="justify-self-end" cols="3">
+                <label>Всего:</label>
+                <v-progress-circular
+                    :class="colorStyle"
+                    :model-value="totalCalories/personStore.person.dayCount * 100"
+                    size="70"
+                    width="7"
+                >
+                    {{ totalCalories }}
+                </v-progress-circular>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <card-meal-time
+                    title="Завтрак"
+                    time="morning"
+                    icon="mdi-weather-sunny"
+                    :color="'#d5e000'"
+                    @triggered="goToSecondStep"
+                />
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <card-meal-time
+                    title="Обед"
+                    time="lanch"
+                    icon="mdi-clock-time-one-outline"
+                    :color="'#ff8a0d'"
+                    @triggered="goToSecondStep"
+                />
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <card-meal-time
+                    title="Ужин"
+                    time="meal"
+                    icon="mdi-pasta"
+                    :color="'#bb04c2'"
+                    @triggered="goToSecondStep"
+                />
+            </v-col>
+        </v-row>
     </v-window-item>
-    <v-window-item
-    :value="2">
+    <v-window-item :value="2">
         <base-check-list
-        @next-step="goToThirdStep"
-        @back-step="step--"/>
+            @next-step="goToThirdStep"
+            @back-step="step--"
+        />
     </v-window-item>
-    <v-window-item
-    :value="3">
+    <v-window-item :value="3">
         <base-count-window
-        :selected="choose"
-        @back-step="step = 2"
-        @submit="collectData"/>
+            :selected="choose"
+            @back-step="step = 2"
+            @submit="collectData"
+        />
     </v-window-item>
 </v-window>
 </template>

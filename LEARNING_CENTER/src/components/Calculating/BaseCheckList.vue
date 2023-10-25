@@ -34,16 +34,16 @@ const emit = defineEmits(['next-step', 'back-step']);
     />
     
     <v-virtual-scroll
-    v-if="started"
-    :items="actualProducts"
-    height="200">
-    <template v-slot:default="{ item }">
-        <base-list-item :product="item"
-        @choose="addToChoosen"/>
-    </template>
+        v-if="started"
+        :items="actualProducts"
+        height="200"
+    >
+        <template #default="{ item }">
+            <base-list-item 
+                :product="item"
+                @choose="addToChoosen"
+            />
+        </template>
     </v-virtual-scroll>
 </v-card>
 </template>
-
-<style scoped lang='scss'>
-</style>

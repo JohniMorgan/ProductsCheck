@@ -75,20 +75,28 @@ function submitDelete() {
 <v-card>
     <v-container class="mb-6">
     <v-row align-content="center">
-        <v-col  :cols="name != 'xs' ? 2 : 8">
-            <v-icon :color="color" size="x-large">{{ icon }}</v-icon>
+        <v-col :cols="name != 'xs' ? 2 : 8">
+            <v-icon 
+                :color="color" 
+                size="x-large"
+            >
+                {{ icon }}
+            </v-icon>
             <v-input
                 persistent-hint
                 :hint="`Калорий: ${sumCalories}`"
-            >{{ title }}</v-input>
+            >
+                {{ title }}
+            </v-input>
         </v-col>
         <v-col v-if="name != 'xs'">
             <base-food-record
-            v-for="(el, index) in getArray"
-            :key="el.food"
-            v-bind="el"
-            @delete="onDeletTrigger(index)"
-            @edit="onEditTrigger(index)"/>
+                v-for="(el, index) in getArray"
+                :key="el.food"
+                v-bind="el"
+                @delete="onDeletTrigger(index)"
+                @edit="onEditTrigger(index)"
+            />
         </v-col>
         <v-col :cols="name != 'xs' ? 2 : 4" >
             <v-btn
@@ -100,19 +108,20 @@ function submitDelete() {
     <v-row v-if="name == 'xs' && getArray.length != 0">
         <v-list>
             <v-list-group value="openMobile">
-                <template v-slot:activator="{ props, isOpen }">
+                <template #activator="{ props, isOpen }">
                     <div class="center">
-                        <v-icon
-                        v-bind="props"
-                        >{{!isOpen ? 'mdi-chevron-down' : 'mdi-chevron-up'}}</v-icon>
+                        <v-icon v-bind="props">
+                            {{!isOpen ? 'mdi-chevron-down' : 'mdi-chevron-up'}}
+                        </v-icon>
                     </div>
                 </template>
                 <base-food-record
-                v-for="(el, index) in getArray"
-                :key="el.food"
-                v-bind="el"
-                @delete="onDeletTrigger(index)"
-                @edit="onEditTrigger(index)"/>
+                    v-for="(el, index) in getArray"
+                    :key="el.food"
+                    v-bind="el"
+                    @delete="onDeletTrigger(index)"
+                    @edit="onEditTrigger(index)"
+                />
             </v-list-group>
         </v-list>
     </v-row>
@@ -120,14 +129,16 @@ function submitDelete() {
 </v-card>
 
 <dialog-edit-card
-:time="time"
-:record="recordProp"
-v-model="dialog"
-@submit="updateCount"/>
+    :time="time"
+    :record="recordProp"
+    v-model="dialog"
+    @submit="updateCount"
+/>
 
 <base-delete-dialog
-v-model:open="deleteDialog"
-@submit="submitDelete"/>
+    v-model:open="deleteDialog"
+    @submit="submitDelete"
+/>
 
 </template>
 

@@ -25,26 +25,32 @@ function inOkInput(event) {
 </script>
 
 <template>
-<v-menu v-model="menu" :close-on-content-click="false" offset-y>
-    <template v-slot:activator="{ props }">
+<v-menu
+  v-model="menu"
+  :close-on-content-click="false"
+  offset-y
+>
+    <template #activator="{ props }">
       <v-btn
         v-bind="props"
         prepend-icon="mdi-calendar"
         readonly
-      >{{ dateToString }}</v-btn>
+      >
+        {{ dateToString }}
+      </v-btn>
     </template>
     <v-locale-provider locale="ru">
       <v-date-picker
-        width="400"
-        @update:model-value="inOkInput"
-        :model-value="date"
-        @click:cancel="menu = false"
-        @click:save="menu = false"
-        ok-text="ОК"
-        cancel-text="Отмена"
-        header="Выберите дату"
-        title="Выберите дату">
-      </v-date-picker>
+          width="400"
+          @update:model-value="inOkInput"
+          :model-value="date"
+          @click:cancel="menu = false"
+          @click:save="menu = false"
+          ok-text="ОК"
+          cancel-text="Отмена"
+          header="Выберите дату"
+          title="Выберите дату"
+        />
     </v-locale-provider>
 </v-menu>
 </template>

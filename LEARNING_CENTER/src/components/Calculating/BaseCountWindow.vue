@@ -35,17 +35,19 @@ function submit() {
 <template>
 <v-card>
     <v-input
-    append-icon="mdi-backspace-outline"
-    @click:append="close">
+        append-icon="mdi-backspace-outline"
+        @click:append="close"
+    >
         Выбрано {{ food.name }}
     </v-input>
     <v-divider/>
     <v-text-field
-    v-model="count"
-    prepend-icon="mdi-plus-minus">
-    <template v-slot:append>
-        грамм
-    </template>
+        v-model="count"
+        prepend-icon="mdi-plus-minus"
+    >
+        <template #append>
+            грамм
+        </template>
     </v-text-field>
     <v-table>
         <thead>
@@ -60,11 +62,6 @@ function submit() {
         </tbody>
     </v-table>
 
-    <v-btn
-    @click="submit">Сохранить</v-btn>
+    <v-btn @click="submit">Сохранить</v-btn>
 </v-card>
 </template>
-
-<style scoped lang='scss'>
-
-</style>
