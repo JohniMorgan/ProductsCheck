@@ -8,12 +8,12 @@ import { ref } from 'vue';
 
 const productStore = useProductStore();
 const db = useDateDB();
-const person = usePersonStore();
+const personStore = usePersonStore();
 productStore.init();
 db.init();
-person.init();
+personStore.init();
 
-const open = ref(person.person.name == null);
+const isOpenPersonDataForm = ref(personStore.person.name == null);
 </script>
 
 <template>
@@ -22,8 +22,7 @@ const open = ref(person.person.name == null);
 <v-main>
   <v-container fluid>
     <router-view/>
-    <person-data-form
-    v-model:open="open"/>
+    <person-data-form v-model:open="isOpenPersonDataForm"/>
   </v-container>
 </v-main>
 </v-layout>

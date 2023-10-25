@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
-const ITEM_TAG = 'ProductsInfoData';
+const ITEM_TAG = 'ProductsInfoData(EB)';
+const BASE_POWER = 2488; //Заведомо известен размер JSON файла
 
 export const useProductStore = defineStore('products', {
     state: () => ({
@@ -11,26 +12,32 @@ export const useProductStore = defineStore('products', {
     actions: {
         async init() {
             const initData = localStorage.getItem(ITEM_TAG);
-            if (!initData) {
-                try {
-                    const response = await fetch('/food_base.json');
-                    const data = await response.json();
-                    this.products = data.map((element, index) => {
-                        //Добавляем элементы в массив, но с доп полем id
-                        return { ...element, id: index + 1 };
-                    });
-                    localStorage.setItem(ITEM_TAG, JSON.stringify(this.products));
-                } catch (error) {
-                    console.log(error);
-                }
+            //Подгружаем исходную базу данных
+            try {
+                const response = await fetch('/src/assets/food_base.json');
+                const data = await response.json();
+                this.products = data.map((element, index) => {
+                    //Добавляем элементы в массив, но с доп полем id
+                    return { ...element, id: index + 1 };
+                });
+            } catch (error) {
+                console.log(error);
             }
-            else {
-                this.products = JSON.parse(initData);
+            //Если нашлись дата в localStorage
+            //Мы добавляем их к массиву
+            if (initData) {
+                console.log(JSON.parse(initData));
+                Array.prototype.push.apply(this.products, JSON.parse(initData).map((element, index) => {
+                    return {...element, id: index + 1 + BASE_POWER};
+                }))
             }
             this.lastId = this.products[this.products.length-1].id;
         },
         updateStorage() {
-            localStorage.setItem(ITEM_TAG, JSON.stringify(this.products));
+            //Т.к. все кастомные продукты добавлены в конец
+            //Срезаем массив получая только кастом
+            //И записываем его в localStorage
+            localStorage.setItem(ITEM_TAG, JSON.stringify(this.products.slice(BASE_POWER)));
         },
         getCalories(id) {
             let calories = this.getById(id).calories;
@@ -57,7 +64,7 @@ export const useProductStore = defineStore('products', {
             const index = this.products.indexOf(product);
             this.products.splice(index, 1);
             this.updateStorage();
-        }
+        },
     },
     getters: {
         getById: (store) => 

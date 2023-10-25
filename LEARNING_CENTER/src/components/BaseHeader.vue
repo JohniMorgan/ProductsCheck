@@ -2,6 +2,7 @@
 import { useTheme, useDisplay } from 'vuetify';
 import { ref, watchEffect, computed } from 'vue';
 import { usePersonStore } from '../store/person';
+import { useProductStore } from '../store/product-store';
 import { useRoute } from 'vue-router'
 
 const personStore = usePersonStore();
@@ -32,7 +33,7 @@ const appName = computed(() => {
 <template>
     <v-app-bar>
     <template #title>
-        <v-toolbar-title>{{ appName }}</v-toolbar-title>
+        <v-toolbar-title><h1 class="header-label">{{ appName }}</h1></v-toolbar-title>
     </template>
     <template #prepend>
 
@@ -42,6 +43,7 @@ const appName = computed(() => {
         mandatory
         @update:model-value="$router.push(`/${position}`)"
     >
+        
         <v-btn
             value="person" 
             stacked
@@ -87,8 +89,8 @@ const appName = computed(() => {
 </template>
 
 <style scoped lang='scss'>
-    h1 {
-        font-size: 20px;
+    .header-label {
+        font-size: 1.5rem;
     }
     .switch-label {
         display: block;

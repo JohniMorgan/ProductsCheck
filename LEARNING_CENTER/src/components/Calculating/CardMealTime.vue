@@ -19,8 +19,8 @@ const props = defineProps({
 });
 const emit = defineEmits(['triggered']);
 const selected = ref(null);
-const dialog = ref(false);
-const deleteDialog = ref(false);
+const isEditDialogOpen = ref(false);
+const isDeleteDialog = ref(false);
 const delIndex = ref(null);
 const recordProp = computed(() => {
     return selectedRecord.value ? selectedRecord.value : undefined;
@@ -44,13 +44,13 @@ function triggered() {
    emit('triggered', {value: props.time})
 };
 function onDeletTrigger(index) {
-    deleteDialog.value = true;
+    isDeleteDialog.value = true;
     delIndex.value = index;
    
 };
 function onEditTrigger(index) {
     selected.value = index;
-    dialog.value = true;
+    isEditDialogOpen.value = true;
 };
 function updateCount(event) {
     db.editFood({
@@ -100,9 +100,10 @@ function submitDelete() {
         </v-col>
         <v-col :cols="name != 'xs' ? 2 : 4" >
             <v-btn
-            icon="mdi-plus"
-            color="#02bf28"
-            @click="triggered"/>
+                icon="mdi-plus"
+                color="#02bf28"
+                @click="triggered"
+            />
         </v-col>
     </v-row>
     <v-row v-if="name == 'xs' && getArray.length != 0">
@@ -131,12 +132,12 @@ function submitDelete() {
 <dialog-edit-card
     :time="time"
     :record="recordProp"
-    v-model="dialog"
+    v-model="isEditDialogOpen"
     @submit="updateCount"
 />
 
 <base-delete-dialog
-    v-model:open="deleteDialog"
+    v-model:open="isDeleteDialog"
     @submit="submitDelete"
 />
 

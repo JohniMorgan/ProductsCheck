@@ -53,45 +53,47 @@ const periodDataDates = computed(() => {
 <template>
 <v-container>
     <v-row class="bar">
-    <v-col>
-        <base-date-picker
-        v-model:date="firstDate"/>
-    </v-col>
-    <v-col>
-        <base-date-picker
-        v-model:date="lastDate"/>
-    </v-col>
-    </v-row>
-    <v-row>
         <v-col>
-            <report-view-model
-            title="Каллории (кКал)"
-            :data="periodStatistic.calories"
-            :labels="periodDataDates"
-            type="calories"/>
+            <base-date-picker v-model:date="firstDate"/>
         </v-col>
         <v-col>
-            <report-view-model
-            title="Белки (г)"
-            :data="periodStatistic.proteins"
-            :labels="periodDataDates"
-            type="proteins"/>
+            <base-date-picker v-model:date="lastDate"/>
         </v-col>
     </v-row>
     <v-row>
         <v-col>
             <report-view-model
-            title="Жиры (г)"
-            :data="periodStatistic.fats"
-            :labels="periodDataDates"
-            type="fats"/>
+                title="Каллории (кКал)"
+                :data="periodStatistic.calories"
+                :labels="periodDataDates"
+                type="calories"
+            />
         </v-col>
         <v-col>
             <report-view-model
-            title="Углеводы (г)"
-            :data="periodStatistic.carbs"
-            :labels="periodDataDates"
-            type="carbs"/>
+                title="Белки (г)"
+                :data="periodStatistic.proteins"
+                :labels="periodDataDates"
+                type="proteins"
+            />
+        </v-col>
+    </v-row>
+    <v-row>
+        <v-col>
+            <report-view-model
+                title="Жиры (г)"
+                :data="periodStatistic.fats"
+                :labels="periodDataDates"
+                type="fats"
+            />
+        </v-col>
+        <v-col>
+            <report-view-model
+                title="Углеводы (г)"
+                :data="periodStatistic.carbs"
+                :labels="periodDataDates"
+                type="carbs"
+            />
         </v-col>
     </v-row>
 </v-container>

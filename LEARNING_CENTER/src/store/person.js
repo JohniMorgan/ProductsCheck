@@ -46,8 +46,8 @@ export const usePersonStore = defineStore('person', {
                     break;
             }
 
-            let count = 10*this.person.weight + 6.25*this.person.height;
-            count += -5*this.person.age + genderRatio;
+            let count = 10 * this.person.weight + 6.25 * this.person.height;
+            count += -5 * this.person.age + genderRatio;
             count *= activityRatio;
             count = Math.ceil(count);
             this.person.dayCount = count;
@@ -61,7 +61,7 @@ export const usePersonStore = defineStore('person', {
             let min_BDI = 20;
             if (this.person.gender == 'female') min_BDI -= 1;
             for (let i = 0; i < 6; i++) {
-                if (this.person.age > 24 + 10*i) min_BDI += 1;
+                if (this.person.age > 24 + 10 * i) min_BDI += 1;
                 else break;
             }
             let real_BDI = this.person.weight / (this.person.height * this.person.height) * 10000;

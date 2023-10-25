@@ -5,7 +5,7 @@ import { VDataTable } from 'vuetify/lib/labs/components.mjs';
 import BaseDeleteDialog from '../GeneralComponents/BaseDeleteDialog.vue';
 import DialogAddProduct from './DialogAddProduct.vue'
 const productStore = useProductStore();
-const dialog = ref(false);
+const isAddDialogOpen = ref(false);
 const selectProductId = ref(-1);
 const head = [
     { title: 'Название', align: 'start', sortable: false, order: 'asc', key: 'name'},
@@ -34,10 +34,10 @@ function decPage() {
 };
 function openEditDialog(product) {
     selectProductId.value = product.id;
-    dialog.value = true;
+    isAddDialogOpen.value = true;
 }
 function openDialog() {
-    dialog.value = true;
+    isAddDialogOpen.value = true;
 };
 
 const deleteIndex = ref(null);
@@ -102,7 +102,7 @@ function applay() {
     </template>
     </v-data-table>
     <dialog-add-product
-        v-model:open="dialog"
+        v-model:open="isAddDialogOpen"
         @update:open="selectProductId = -1"
         :product-id="selectProductId"
     />
@@ -114,15 +114,8 @@ function applay() {
 </template>
 
 <style scoped lang="scss">
-    v-table {
-        overflow: scroll;
-    }
     .v-input {
         max-width: 160px;
-    }
-    label {
-        margin-right: auto;
-        margin-left: auto;
     }
     .v-col {
         display: flex;
