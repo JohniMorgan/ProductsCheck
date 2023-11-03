@@ -12,24 +12,15 @@ const withoutFirst = computed(() => {
 });
 const withoutName = computed(() => {
    const {id, name, ...newObject} = food.value;
-    
    return newObject;
 });
-const food = computed(() => {
-     
-   return productStore.getById(props.selected)
-});
-
-
-
+const food = computed(() => productStore.getById(props.selected));
 function close() {
    emit('back-step');
 };
 function submit() {
    emit('submit', {value: Number(count.value)});
 };
-
-
 </script>
 
 <template>

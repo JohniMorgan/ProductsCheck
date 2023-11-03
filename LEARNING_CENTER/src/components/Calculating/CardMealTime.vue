@@ -22,31 +22,27 @@ const selected = ref(null);
 const isEditDialogOpen = ref(false);
 const isDeleteDialog = ref(false);
 const delIndex = ref(null);
-const recordProp = computed(() => {
-    return selectedRecord.value ? selectedRecord.value : undefined;
-});
-const getArray = computed(() => {
-   return db.getDay()[props.time];
-});
+const recordProp = computed(() =>  selectedRecord.value ? selectedRecord.value : null);
+const getEatenProductsArray = computed(() => db.getDay()[props.time]);
 const sumCalories = computed(() => {
     let sum = 0;
-    getArray.value.forEach(element => {
-        sum += productStore.getCalories(element.food) * element.count/100;
+    getEatenProductsArray.value.forEach(element => {
+        sum += productStore.getCalories(element.food) * element.count / 100;
     });
     return sum
 });
 
 const selectedRecord = computed(() => {
-    return getArray.value[selected.value];
+    return getEatenProductsArray.value[selected.value];
 });
 
 function triggered() {
    emit('triggered', {value: props.time})
 };
+
 function onDeletTrigger(index) {
     isDeleteDialog.value = true;
     delIndex.value = index;
-   
 };
 function onEditTrigger(index) {
     selected.value = index;
@@ -116,8 +112,9 @@ function submitDelete() {
                         </v-icon>
                     </div>
                 </template>
+                <!--В качестве ключа передаётся идентификатор продукта из базы данных-->
                 <base-food-record
-                    v-for="(el, index) in getArray"
+                    v-for="(el, index) in getEatenProductsArray"
                     :key="el.food"
                     v-bind="el"
                     @delete="onDeletTrigger(index)"
@@ -128,19 +125,16 @@ function submitDelete() {
     </v-row>
     </v-container>
 </v-card>
-
 <dialog-edit-card
     :time="time"
     :record="recordProp"
     v-model="isEditDialogOpen"
     @submit="updateCount"
 />
-
 <base-delete-dialog
     v-model:open="isDeleteDialog"
     @submit="submitDelete"
 />
-
 </template>
 
 <style scoped lang='scss'>
