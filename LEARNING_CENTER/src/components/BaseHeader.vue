@@ -2,14 +2,12 @@
 import { useTheme, useDisplay } from 'vuetify';
 import { ref, watchEffect, computed } from 'vue';
 import { usePersonStore } from '../store/person';
-import { useProductStore } from '../store/product-store';
 import { useRoute } from 'vue-router'
 
 const personStore = usePersonStore();
 const position = ref('');
 const route = useRoute();
 const { name : displayName } = useDisplay();
-
 
 watchEffect(() => { //Необходимо соблюсти активность навигации
     if (position.value != route.path.slice(1))
@@ -18,7 +16,6 @@ watchEffect(() => { //Необходимо соблюсти активность
 
 const theme = useTheme();
 const switchTheme = () => {
-
     theme.global.name.value = theme.global.current.value.dark ? 'baseLightTheme' : 'baseDarkTheme';
 }
 const appName = computed(() => {

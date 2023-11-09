@@ -31,7 +31,7 @@ export const useProductStore = defineStore('products', {
                     return {...element, id: index + 1 + BASE_POWER};
                 }))
             }
-            this.lastId = this.products[this.products.length-1].id;
+            this.lastId = this.products[this.products.length - 1].id;
         },
         updateStorage() {
             //Т.к. все кастомные продукты добавлены в конец

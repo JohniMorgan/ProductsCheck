@@ -5,6 +5,7 @@ import { VDataTable } from 'vuetify/lib/labs/components.mjs';
 import BaseDeleteDialog from '../GeneralComponents/BaseDeleteDialog.vue';
 import DialogAddProduct from './DialogAddProduct.vue'
 const productStore = useProductStore();
+
 const isAddDialogOpen = ref(false);
 const selectProductId = ref(-1);
 const head = [
@@ -14,7 +15,8 @@ const head = [
     {title: 'Жиры', align: 'end', key: 'fats'},
     {title: 'Углеводы', align: 'end', key: 'carbs'},
     {title: 'Действия',align: 'center', key:'actions', sortable: false},
-]
+];
+
 const props = defineProps ({
     keyWord: String
 });
@@ -26,9 +28,8 @@ const actualProducts = computed(() => {
     })
 });
 const currentPage = ref(1);
-const countPage = computed(() => {
-   return Math.ceil(actualProducts.value.length / 7);
-});
+const countPage = computed(() => Math.ceil(actualProducts.value.length / 7));
+
 function decPage() {
    if (currentPage.value != 1) currentPage.value--
 };
@@ -51,8 +52,6 @@ function applay() {
     productStore.deleteCustomProduct(deleteIndex.value);
     deleteIndex.value = null
 };
-
-
 </script>
 
 <template>

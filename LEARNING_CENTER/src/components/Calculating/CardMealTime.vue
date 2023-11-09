@@ -31,10 +31,7 @@ const sumCalories = computed(() => {
     });
     return sum
 });
-
-const selectedRecord = computed(() => {
-    return getEatenProductsArray.value[selected.value];
-});
+const selectedRecord = computed(() => getEatenProductsArray.value[selected.value]);
 
 function triggered() {
    emit('triggered', {value: props.time})
@@ -44,10 +41,12 @@ function onDeletTrigger(index) {
     isDeleteDialog.value = true;
     delIndex.value = index;
 };
+
 function onEditTrigger(index) {
     selected.value = index;
     isEditDialogOpen.value = true;
 };
+
 function updateCount(event) {
     db.editFood({
         time: props.time,
@@ -61,10 +60,7 @@ function submitDelete() {
         time: props.time,
         index: delIndex.value,
     })
-
 };
-
-
 </script>
 
 <template>

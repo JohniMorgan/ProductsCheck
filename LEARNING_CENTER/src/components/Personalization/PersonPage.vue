@@ -7,9 +7,7 @@ import { useDisplay } from 'vuetify/lib/framework.mjs';
 const personStore = usePersonStore();
 const { name : displayName } = useDisplay();
 
-const localeGender = computed(() => {
-    return personStore.person.gender == 'male' ? 'Мужской' : 'Женский';
-});
+const localeGender = computed(() => personStore.person.gender == 'male' ? 'Мужской' : 'Женский');
 
 const activityLocale = computed(() => {
     let activityType = null;
@@ -78,7 +76,6 @@ const colorBDIclass = computed(() => {
 });
 
 const openEdit = ref(false);
-
 </script>
 
 <template>

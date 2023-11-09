@@ -20,7 +20,6 @@ function onInput(event) {
         value: event.target.value,
     })
 };
-
 </script>
 
 <template>

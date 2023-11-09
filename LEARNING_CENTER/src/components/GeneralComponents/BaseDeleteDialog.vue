@@ -16,11 +16,9 @@ function applay() {
     close();
 };
 
-
 function close() {
     emit('update:open', false);
 };
-
 </script>
 
 <template>

@@ -80,7 +80,7 @@ const colorStyle = computed(() => {
                 <label>Всего:</label>
                 <v-progress-circular
                     :class="colorStyle"
-                    :model-value="totalCalories/personStore.person.dayCount * 100"
+                    :model-value="totalCalories / personStore.person.dayCount * 100"
                     size="70"
                     width="7"
                 >

@@ -46,8 +46,6 @@ const periodDataDates = computed(() => {
     }
     return data;
 })
-
-
 </script>
 
 <template>

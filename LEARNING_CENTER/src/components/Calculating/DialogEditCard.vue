@@ -31,9 +31,7 @@ onBeforeUpdate(() => {
     inputValue.value = props.record.count;
 });
 
-const selectedProduct = computed(() => {
-    return productStore.getById(props.record.food);
-});
+const selectedProduct = computed(() => productStore.getById(props.record.food));
 
 
 function submit() {  

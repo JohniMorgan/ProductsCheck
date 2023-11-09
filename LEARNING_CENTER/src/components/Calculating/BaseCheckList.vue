@@ -15,6 +15,7 @@ const actualProducts = computed(() => productStore.products.filter(p => p.name.i
 function addToChoosen(event) {
     emit('next-step', {value: event.trigger});
 };
+
 function onInput(event) {
     msg.value = event.value;
     started.value = true;

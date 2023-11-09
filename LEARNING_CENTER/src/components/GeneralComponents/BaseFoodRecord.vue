@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 import { useProductStore } from '../../store/product-store';
 const productStore = useProductStore();
 
@@ -19,8 +19,6 @@ function onEditIcon() {
         count: props.count,
     });
 };
-
-
 </script>
 
 <template>
@@ -29,7 +27,7 @@ function onEditIcon() {
             <v-icon @click="onEditIcon">mdi-pencil</v-icon>
             <v-icon @click="onDeleteIcon">mdi-close</v-icon>
         </template>
-        {{ productStore.getById(food).name }} - {{ count }} гр./
-        {{ productStore.getCalories(food) * count/100}} кКал.
+        {{ productStore.getById(food).name }} - {{ count }} гр. /
+        {{ productStore.getCalories(food) * count / 100}} кКал.
     </v-input>
 </template>

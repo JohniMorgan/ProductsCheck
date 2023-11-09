@@ -50,8 +50,6 @@ onBeforeUpdate(() => {
     const infoArray = formInfo.value;
     if (props.open && props.productId != -1) {
         const product = productStore.getById(props.productId);
-         
-         
         infoArray[0].value = product.name;
         infoArray[1].value = product.calories.slice(0, product.calories.indexOf(' к'));
         infoArray[2].value = product.proteins.slice(0, product.proteins.indexOf(' г'));
@@ -62,21 +60,15 @@ onBeforeUpdate(() => {
     }
 });
 
-const title = computed(() => {
-    return props.productId == -1 ? 'Добавить продукт в базу' : 'Редактирование продукта';
-});
-
+const title = computed(() => props.productId == -1 ? 'Добавить продукт в базу' : 'Редактирование продукта');
 
 function close() {
     emit('update:open', false);
 };
 
 async function validate() {
-     
     const {valid} = await productForm.value.validate();
-
-    if (valid) 
-    submit();
+    if (valid) submit();
 };
 
 function submit() {
@@ -136,11 +128,11 @@ function submit() {
             </v-col>
             <v-col cols="6">
                 <base-input-slot
-                    :value="formInfo[id+2].value"
-                    :name="formInfo[id+2].title"
-                    :pattern="formInfo[id+2].type"
-                    :test="formInfo[id+2].pattern"
-                    @change="formInfo[id+2].value = $event.value"
+                    :value="formInfo[id + 2].value"
+                    :name="formInfo[id + 2].title"
+                    :pattern="formInfo[id + 2].type"
+                    :test="formInfo[id + 2].pattern"
+                    @change="formInfo[id + 2].value = $event.value"
                 />
             </v-col>
         </v-row>

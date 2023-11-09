@@ -55,7 +55,6 @@ const formFieldsInfo = ref([
 const formRadio = ref('male');
 
 function close() {
-     
     emit('update:open', false);
 };
 
@@ -104,11 +103,8 @@ onBeforeUpdate(() => {
 const form = ref(null);
 
 async function validate() {
-     
     const {valid} = await form.value.validate();
-
-    if (valid) 
-    registrationSubmit();
+    if (valid) registrationSubmit();
 };
 
 function registrationSubmit() {
@@ -125,7 +121,6 @@ function registrationSubmit() {
     store.registerPerson(fullFormData);
     close();
 };
-
 </script>
 
 <template>

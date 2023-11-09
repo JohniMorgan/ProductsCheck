@@ -7,12 +7,11 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:date']);
 
-const menu = ref(false);
-//const db = useDateDB();
+const isThisOpen = ref(false);
 
 const dateToString = computed(() => {
     const day = String(props.date.getDate()).padStart(2, '0');
-    const month = String(props.date.getMonth() + 1).padStart(2,'0');
+    const month = String(props.date.getMonth() + 1).padStart(2, '0');
     const year = props.date.getFullYear()
     return `${day}.${month}.${year}`
 });
@@ -26,7 +25,7 @@ function inOkInput(event) {
 
 <template>
 <v-menu
-  v-model="menu"
+  v-model="isThisOpen"
   :close-on-content-click="false"
   offset-y
 >
@@ -44,8 +43,8 @@ function inOkInput(event) {
           width="400"
           @update:model-value="inOkInput"
           :model-value="date"
-          @click:cancel="menu = false"
-          @click:save="menu = false"
+          @click:cancel="isThisOpen= false"
+          @click:save="isThisOpen = false"
           ok-text="ОК"
           cancel-text="Отмена"
           header="Выберите дату"
